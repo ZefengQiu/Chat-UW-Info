@@ -1,0 +1,155 @@
+//
+//  SignInViewController.swift
+//  Chat UW Info
+//
+//  Created by Qiu Zefeng on 2015-09-25.
+//  Copyright © 2015 Qiu Zefeng. All rights reserved.
+//
+
+import UIKit
+import Parse
+import Bolts
+
+class SignInViewController: UIViewController {
+  
+  @IBOutlet weak var userNameTextField: UITextField!
+  @IBOutlet weak var passwordTextField: UITextField!
+  
+  var securePassword = true
+  
+  @IBAction func showPassword(sender: UIBarButtonItem) {
+    if securePassword {
+      securePassword = false
+    }else {
+      securePassword = true
+    }
+    passwordTextField.secureTextEntry = securePassword
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    userNameTextField.placeholder = "User"
+    passwordTextField.placeholder = "password"
+    passwordTextField.secureTextEntry = securePassword
+    
+    if let user = PFUser.currentUser() {
+      if user.isAuthenticated() {
+        self.getUserInfoFromParseChatUser(user)
+//        self.cometoChats()
+      }
+    }
+    
+    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+    view.addGestureRecognizer(tap)
+    
+  }
+  
+  func dismissKeyboard() {
+    view.endEditing(true)
+  }
+  
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
+  }
+  
+  //MARK: pfuser log in
+  
+  @IBAction func logIn(sender: UIButton) {
+		let userLogin = userNameTextField.text!
+		let trimmedUserName = userLogin.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    
+    PFUser.logInWithUsernameInBackground(trimmedUserName, password: passwordTextField.text!) { user, error in
+      if user != nil {
+        if user!["emailVerified"] as! Bool == false {
+          self.alertEmailNotVerify()
+        }else {
+          ChatUser.shareInstance.emailVerified = true
+        }
+        self.getUserInfoFromParseChatUser(user!)
+      }else if let errors = error {
+        self.showErrorView(errors)
+      }
+    }
+    
+  }
+  
+  func cometoChats() {
+    let rootVC = self.storyboard?.instantiateViewControllerWithIdentifier("RootViewController") as! RootViewController
+    self.navigationController?.showDetailViewController(rootVC, sender: nil)
+  }
+  
+  
+  //MARK: get the user information from the parse chat user pfobject
+  //use singletom model to make sure that user are consistent in program, especially in different views, for there may be a parse bug
+  
+  func getUserInfoFromParseChatUser(pfuser: PFUser) {
+    let userName = pfuser.username
+    let userEmail = pfuser.email
+    
+    let query = PFQuery(className: "ParseChatUser")
+    query.whereKey("userName", equalTo: userName!)
+    query.whereKey("userEmail", equalTo: userEmail!)
+    
+    query.getFirstObjectInBackgroundWithBlock({(object: PFObject?, error: NSError?) -> Void in
+      if error == nil {
+        if let chatObject = object as? ParseChatUser {
+          ChatUser.shareInstance.userName = chatObject.userName
+          ChatUser.shareInstance.userEmail = chatObject.userEmail
+          ChatUser.shareInstance.userDepartment = chatObject.userDepartment
+          
+          self.cometoChats()
+        }
+      }else if let error = error {
+        self.showErrorView(error)
+      }
+    })
+  }
+  
+  
+  //MARK: go to sign up a pfuser
+  
+  @IBAction func SignUp(sender: UIButton) {
+    let signUpNav = self.storyboard?.instantiateViewControllerWithIdentifier("SignUpNavController") as! UINavigationController
+    let signUpVc = signUpNav.topViewController as! SignUpViewController
+    signUpVc.delegate = self
+    self.navigationController?.presentViewController(signUpNav, animated: true, completion: nil)
+  }
+  
+  private func alertEmailNotVerify() {
+    let alertController = UIAlertController(title: "UW Email Verification",
+      message: "please verify your UW email before Chat with others",
+      preferredStyle: UIAlertControllerStyle.Alert
+    )
+    
+    alertController.addAction(UIAlertAction(title: "OKAY",
+      style: UIAlertActionStyle.Default,
+      handler: { alertController in self.cometoChats() } ))
+    
+    self.presentViewController(alertController, animated: true, completion: nil)
+  }
+
+  
+}
+
+extension SignInViewController: SignUpViewControllerDelegate {
+  
+  func signUpCancel(controller: UIViewController) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  func providingSignUpInformation(controller: UIViewController, signUpUserName userName: String, signUpPassword password: String) {
+    userNameTextField.text = userName
+    passwordTextField.text = password
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+}
+
+
+
+
+
+
+

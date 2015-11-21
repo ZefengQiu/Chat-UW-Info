@@ -1,0 +1,101 @@
+//
+//  MapViewController.swift
+//  Chat UW Info
+//
+//  Created by Qiu Zefeng on 2015-10-21.
+//  Copyright © 2015 Qiu Zefeng. All rights reserved.
+//
+
+import UIKit
+
+
+class MapViewController: UIViewController {
+	
+	@IBOutlet weak var mapView: GMSMapView!
+	
+	let locationManager = CLLocationManager()
+	
+	@IBAction func search(sender: UIBarButtonItem) {
+		let msVC = self.storyboard?.instantiateViewControllerWithIdentifier("MapSearchViewController") as! MapSearchViewController
+		msVC.delegate = self
+		self.showDetailViewController(msVC, sender: nil)
+	}
+  
+  @IBAction func backToUW() {
+    let defaultCoordinate = CLLocationCoordinate2D(latitude: 43.472761, longitude: -80.542164)
+    mapView.camera = GMSCameraPosition(target: defaultCoordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+  }
+	
+	@IBAction func clear(sender: UIBarButtonItem) {
+		mapView.clear()
+	}
+	
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		self.mapView.layoutIfNeeded()
+		locationManager.delegate = self
+		locationManager.requestWhenInUseAuthorization()
+		
+		if CLLocationManager.locationServicesEnabled() && CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse {
+			mapView.myLocationEnabled = true
+			mapView.settings.myLocationButton = true
+		}
+    
+    let defaultCoordinate = CLLocationCoordinate2D(latitude: 43.472761, longitude: -80.542164)
+    mapView.camera = GMSCameraPosition(target: defaultCoordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+
+	}
+	
+	private func setMarkerInMap(name: String, spot: CLLocationCoordinate2D) {
+		let marker = GMSMarker()
+		
+		marker.position = spot
+		marker.title = name
+		marker.snippet = "UWaterloo"
+		
+    mapView.camera = GMSCameraPosition(target: spot, zoom: 15, bearing: 0, viewingAngle: 0)
+		marker.map = mapView
+	}
+	
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+		// Dispose of any resources that can be recreated.
+	}
+
+}
+
+extension MapViewController: MapSearchViewControllerDelegate {
+	func cancelSearchInMap(controller: UIViewController) {
+		dismissViewControllerAnimated(true, completion: nil)
+	}
+	
+	func providingSearchResult(controller: UIViewController, searchResult result: String, buildingLocation location: CLLocationCoordinate2D) {
+		setMarkerInMap(result, spot: location)
+		dismissViewControllerAnimated(true, completion: nil)
+	}
+}
+
+extension MapViewController: CLLocationManagerDelegate {
+
+	func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+		if status == .AuthorizedWhenInUse {
+			locationManager.startUpdatingLocation()
+			mapView.myLocationEnabled = true
+			mapView.settings.myLocationButton = true
+		}
+	}
+ 
+	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+		if let location = locations.first  {
+			mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+			locationManager.stopUpdatingLocation()
+		}
+
+	}
+}
+
+
+
+

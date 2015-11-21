@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="jl5-8V-Yrd" customClass="AddChatsCell" customModule="Chat_UW_Info" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jl5-8V-Yrd" id="c2h-CZ-EVl">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Chats +" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFb-e8-SaL">
+                        <rect key="frame" x="8" y="12" width="304" height="19"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="AFb-e8-SaL" secondAttribute="bottom" constant="12" id="7oX-Ql-aUJ"/>
+                    <constraint firstAttribute="trailing" secondItem="AFb-e8-SaL" secondAttribute="trailing" constant="8" id="J6G-vM-Xlr"/>
+                    <constraint firstItem="AFb-e8-SaL" firstAttribute="top" secondItem="c2h-CZ-EVl" secondAttribute="top" constant="12" id="Ked-hW-UDU"/>
+                    <constraint firstItem="AFb-e8-SaL" firstAttribute="leading" secondItem="c2h-CZ-EVl" secondAttribute="leading" constant="8" id="diH-EO-M6f"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <point key="canvasLocation" x="660" y="473"/>
+        </tableViewCell>
+    </objects>
+</document>
