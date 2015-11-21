@@ -13,8 +13,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOm-b6-vGd">
-                        <rect key="frame" x="8" y="11" width="42" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOm-b6-vGd">
+                        <rect key="frame" x="8" y="11" width="247" height="21"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -30,6 +30,7 @@
                 </subviews>
                 <animations/>
                 <constraints>
+                    <constraint firstItem="d4f-fU-42i" firstAttribute="leading" secondItem="OOm-b6-vGd" secondAttribute="trailing" constant="8" id="Bw5-Kx-z3P"/>
                     <constraint firstItem="OOm-b6-vGd" firstAttribute="top" secondItem="eUg-Cw-jw3" secondAttribute="top" constant="11" id="SHb-JO-fid"/>
                     <constraint firstItem="OOm-b6-vGd" firstAttribute="leading" secondItem="eUg-Cw-jw3" secondAttribute="leading" constant="8" id="YcR-7C-unD"/>
                     <constraint firstAttribute="bottom" secondItem="OOm-b6-vGd" secondAttribute="bottom" constant="12" id="b6G-hV-p5h"/>
@@ -43,7 +44,7 @@
                 <outlet property="privacySwitch" destination="d4f-fU-42i" id="zeU-QB-uQI"/>
                 <outlet property="userPrivacyLabel" destination="OOm-b6-vGd" id="tht-oE-9Rp"/>
             </connections>
-            <point key="canvasLocation" x="619" y="458"/>
+            <point key="canvasLocation" x="421" y="421"/>
         </tableViewCell>
     </objects>
 </document>
