@@ -39,4 +39,8 @@ extension UIColor {
 	class func chatBule() -> UIColor {
 		return UIColor(red: 0.4157, green: 0.8, blue: 0.9804, alpha: 0.9)
 	}
+  
+  class func blackBlue() -> UIColor {
+    return UIColor(red: 0.0, green: 0.0, blue: 0.2, alpha: 1.0)
+  }
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="bmd-Yg-ny5" customClass="AccountCell" customModule="Chat_UW_Info">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bmd-Yg-ny5" id="8zU-5b-BDG">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="49.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" text="Key" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LZA-6c-8fy">
+                        <rect key="frame" x="8" y="14" width="29" height="21"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oPH-I9-Kjt">
+                        <rect key="frame" x="53" y="14" width="259" height="21"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="oPH-I9-Kjt" firstAttribute="top" secondItem="8zU-5b-BDG" secondAttribute="top" constant="14" id="29G-6f-EL7"/>
+                    <constraint firstItem="oPH-I9-Kjt" firstAttribute="leading" secondItem="LZA-6c-8fy" secondAttribute="trailing" constant="16" id="8Tl-cx-per"/>
+                    <constraint firstItem="LZA-6c-8fy" firstAttribute="centerY" secondItem="oPH-I9-Kjt" secondAttribute="centerY" id="94y-sV-a6z"/>
+                    <constraint firstAttribute="bottom" secondItem="LZA-6c-8fy" secondAttribute="bottom" constant="14" id="Bpp-VJ-YAZ"/>
+                    <constraint firstAttribute="bottom" secondItem="oPH-I9-Kjt" secondAttribute="bottom" constant="14" id="LZa-gs-PQ5"/>
+                    <constraint firstItem="LZA-6c-8fy" firstAttribute="leading" secondItem="8zU-5b-BDG" secondAttribute="leading" constant="8" id="PNh-so-1hz"/>
+                    <constraint firstItem="LZA-6c-8fy" firstAttribute="top" secondItem="8zU-5b-BDG" secondAttribute="top" constant="14" id="aN6-SE-W6j"/>
+                    <constraint firstAttribute="trailing" secondItem="oPH-I9-Kjt" secondAttribute="trailing" constant="8" id="bm7-vT-NUF"/>
+                    <constraint firstItem="oPH-I9-Kjt" firstAttribute="leading" secondItem="LZA-6c-8fy" secondAttribute="trailing" constant="16" id="hQ2-ZE-EGu"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="keyLabel" destination="LZA-6c-8fy" id="hr2-c2-tJm"/>
+                <outlet property="valueLabel" destination="oPH-I9-Kjt" id="qlL-9Y-r9x"/>
+            </connections>
+            <point key="canvasLocation" x="545" y="434"/>
+        </tableViewCell>
+    </objects>
+</document>

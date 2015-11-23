@@ -20,7 +20,7 @@ class ChatInfoSessionViewController: UIViewController {
   weak var delegate: ChatInfoSessionViewControllerDelegate?
   
   var infoSessionChatOn: InfoSessionUnit!
-  var user = ChatUser.shareInstance.userName
+  var user: String!
   
   var doneUploadingFromParse = false
   var doneDownloadingFromParse = false
@@ -32,6 +32,8 @@ class ChatInfoSessionViewController: UIViewController {
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+    
+    user = ChatUser.shareInstance.userName
     setUpTableView()
   }
   
@@ -80,6 +82,7 @@ class ChatInfoSessionViewController: UIViewController {
     LocationWebsiteCell.registerInTableView(chatInfoSessionTableView)
 		AddChatsCell.registerInTableView(chatInfoSessionTableView)
     ChatsCell.registerInTableView(chatInfoSessionTableView)
+    SofaCell.registerInTableView(chatInfoSessionTableView)
     
     chatInfoSessionTableView.delegate = self
     chatInfoSessionTableView.dataSource = self
@@ -243,6 +246,7 @@ extension ChatInfoSessionViewController: UITableViewDataSource {
     let locationWebCell = tableView.dequeueReusableCellWithIdentifier(LocationWebsiteCell.identifier()) as! LocationWebsiteCell
 		let addChatCell = tableView.dequeueReusableCellWithIdentifier(AddChatsCell.identifier()) as! AddChatsCell
 		let chatsCell = tableView.dequeueReusableCellWithIdentifier(ChatsCell.identifier()) as! ChatsCell
+    let sofaCell = tableView.dequeueReusableCellWithIdentifier(SofaCell.identifier()) as! SofaCell
 
     let section = indexPath.section
     let row = indexPath.row
@@ -254,18 +258,22 @@ extension ChatInfoSessionViewController: UITableViewDataSource {
 				return timeCell
 			case 1:
 				locationWebCell.locationWebsiteLabel.text = infoSessionChatOn.location
+        locationWebCell.selectedBackgroundView = UIView.cellSelectionStyleChatBlue(UIColor.chatBule())
 				return locationWebCell
       case 2:
         if infoSessionChatOn.website != "" {
+          locationWebCell.selectedBackgroundView = UIView.cellSelectionStyleChatBlue(UIColor.chatBule())
           locationWebCell.locationWebsiteLabel.text = infoSessionChatOn.website
         }else {
           locationWebCell.locationWebsiteLabel.text = "No Website Provided"
         }
         return locationWebCell
       case 3:
+        audiCell.selectionStyle = .None
         audiCell.audienceLabel.text = infoSessionChatOn.audience
         return audiCell
       default:
+        proCell.selectionStyle = .None
         proCell.programLabel.text = infoSessionChatOn.program
         return proCell
       }
@@ -274,10 +282,8 @@ extension ChatInfoSessionViewController: UITableViewDataSource {
 			return addChatCell
 		}else {
 			if !doneDownloadingFromParse && !doneUploadingFromParse{
-				chatsCell.chatContentLabel.textColor = UIColor.lightGrayColor()
-				chatsCell.chatContentLabel.text = "Let's Chat"
-				chatsCell.chatTimeLabel.text = ""
-				return chatsCell
+        sofaCell.selectionStyle = .None
+				return sofaCell
 			}else {
 				doneUploadingFromParse = false
 				let tmpResult = parseResult[row]
@@ -299,7 +305,11 @@ extension ChatInfoSessionViewController: UITableViewDelegate {
   
   func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
     let chatsCell = tableView.dequeueReusableCellWithIdentifier(ChatsCell.identifier()) as! ChatsCell
-    
+    let addChatCell = tableView.dequeueReusableCellWithIdentifier(AddChatsCell.identifier()) as! AddChatsCell
+    let locationWebCell = tableView.dequeueReusableCellWithIdentifier(LocationWebsiteCell.identifier()) as! LocationWebsiteCell
+
+    locationWebCell.selectionStyle = .None
+    addChatCell.selectionStyle = .None
     chatsCell.selectionStyle = .None
   }
   
@@ -325,6 +335,7 @@ extension ChatInfoSessionViewController: UITableViewDelegate {
 				}
 			}
 		}
+    
 		
 		if section == 1 {
 			if row == 0 {

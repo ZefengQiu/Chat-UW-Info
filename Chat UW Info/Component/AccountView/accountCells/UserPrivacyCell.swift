@@ -22,7 +22,7 @@ class UserPrivacyCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     userPrivacyLabel.text = "Allow Others See me"
-    userPrivacyLabel.textColor = UIColor.chatBule()
+    userPrivacyLabel.textColor = UIColor.blackBlue()
   }
   
   override func setSelected(selected: Bool, animated: Bool) {

@@ -35,8 +35,7 @@ class SignInViewController: UIViewController {
     
     if let user = PFUser.currentUser() {
       if user.isAuthenticated() {
-        self.getUserInfoFromParseChatUser(user)
-//        self.cometoChats()
+        self.cometoChats(user)
       }
     }
     
@@ -63,11 +62,9 @@ class SignInViewController: UIViewController {
     PFUser.logInWithUsernameInBackground(trimmedUserName, password: passwordTextField.text!) { user, error in
       if user != nil {
         if user!["emailVerified"] as! Bool == false {
-          self.alertEmailNotVerify()
-        }else {
-          ChatUser.shareInstance.emailVerified = true
+          self.alertEmailNotVerify(user!)
         }
-        self.getUserInfoFromParseChatUser(user!)
+        self.cometoChats(user!)
       }else if let errors = error {
         self.showErrorView(errors)
       }
@@ -75,37 +72,17 @@ class SignInViewController: UIViewController {
     
   }
   
-  func cometoChats() {
+  func cometoChats(user: PFUser) {
     let rootVC = self.storyboard?.instantiateViewControllerWithIdentifier("RootViewController") as! RootViewController
+    
+    ChatUser.shareInstance.userName = user.username!
+    ChatUser.shareInstance.userEmail = user.email!
+    ChatUser.shareInstance.userDepartment = user["department"] as! String
+    ChatUser.shareInstance.emailVerified = user["emailVerified"] as! Bool
+    
     self.navigationController?.showDetailViewController(rootVC, sender: nil)
   }
-  
-  
-  //MARK: get the user information from the parse chat user pfobject
-  //use singletom model to make sure that user are consistent in program, especially in different views, for there may be a parse bug
-  
-  func getUserInfoFromParseChatUser(pfuser: PFUser) {
-    let userName = pfuser.username
-    let userEmail = pfuser.email
-    
-    let query = PFQuery(className: "ParseChatUser")
-    query.whereKey("userName", equalTo: userName!)
-    query.whereKey("userEmail", equalTo: userEmail!)
-    
-    query.getFirstObjectInBackgroundWithBlock({(object: PFObject?, error: NSError?) -> Void in
-      if error == nil {
-        if let chatObject = object as? ParseChatUser {
-          ChatUser.shareInstance.userName = chatObject.userName
-          ChatUser.shareInstance.userEmail = chatObject.userEmail
-          ChatUser.shareInstance.userDepartment = chatObject.userDepartment
-          
-          self.cometoChats()
-        }
-      }else if let error = error {
-        self.showErrorView(error)
-      }
-    })
-  }
+
   
   
   //MARK: go to sign up a pfuser
@@ -117,7 +94,7 @@ class SignInViewController: UIViewController {
     self.navigationController?.presentViewController(signUpNav, animated: true, completion: nil)
   }
   
-  private func alertEmailNotVerify() {
+  private func alertEmailNotVerify(user: PFUser) {
     let alertController = UIAlertController(title: "UW Email Verification",
       message: "please verify your UW email before Chat with others",
       preferredStyle: UIAlertControllerStyle.Alert
@@ -125,7 +102,7 @@ class SignInViewController: UIViewController {
     
     alertController.addAction(UIAlertAction(title: "OKAY",
       style: UIAlertActionStyle.Default,
-      handler: { alertController in self.cometoChats() } ))
+      handler: { alertController in self.cometoChats(user) } ))
     
     self.presentViewController(alertController, animated: true, completion: nil)
   }
@@ -147,6 +124,32 @@ extension SignInViewController: SignUpViewControllerDelegate {
   
 }
 
+
+
+//MARK: get the user information from the parse chat user pfobject
+//use singletom model to make sure that user are consistent in program, especially in different views, for there may be a parse bug
+
+//  func getUserInfoFromParseChatUser(pfuser: PFUser) {
+//    let userName = pfuser.username
+//    let userEmail = pfuser.email
+//
+//    let query = PFQuery(className: "ParseChatUser")
+//    query.whereKey("userName", equalTo: userName!)
+//    query.whereKey("userEmail", equalTo: userEmail!)
+//
+//    query.getFirstObjectInBackgroundWithBlock({(object: PFObject?, error: NSError?) -> Void in
+//      if error == nil {
+//        if let chatObject = object as? ParseChatUser {
+//          ChatUser.shareInstance.userName = chatObject.userName
+//          ChatUser.shareInstance.userEmail = chatObject.userEmail
+//          ChatUser.shareInstance.userDepartment = chatObject.userDepartment
+//
+//        }
+//      }else if let error = error {
+//        self.showErrorView(error)
+//      }
+//    })
+//  }
 
 
 

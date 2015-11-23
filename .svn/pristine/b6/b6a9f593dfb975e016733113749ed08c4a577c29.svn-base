@@ -1,0 +1,132 @@
+//
+//  IndividualViewController.swift
+//  Chat UW Info
+//
+//  Created by Qiu Zefeng on 2015-09-25.
+//  Copyright © 2015 Qiu Zefeng. All rights reserved.
+//
+
+import UIKit
+import Parse
+import Bolts
+
+class AccountViewController: UIViewController {
+  
+  @IBOutlet weak var accoutTableView: UITableView!
+  
+  let user = PFUser.currentUser()
+	var chatUser = ChatUser()
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+		setupTableView()
+		setupUserInfor()
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+		
+		title = "Chat UW Info"
+  }
+	
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
+  }
+  
+	private func setupTableView() {
+		LoadingAccountCell.registerInTableView(accoutTableView)
+		HeaderViewCell.registerInTableView(accoutTableView)
+		AccountCell.registerInTableView(accoutTableView)
+		SettingCell.registerInTableView(accoutTableView)
+		
+		accoutTableView.delegate = self
+		accoutTableView.dataSource = self
+		
+		accoutTableView.rowHeight = UITableViewAutomaticDimension
+	}
+	
+	private func setupUserInfor() {
+		chatUser.userName = (user?.username)!
+		chatUser.userEmail = (user?.email)!
+		chatUser.emailVerified = user?["emailVerified"] as! Bool
+	}
+}
+
+extension AccountViewController: UITableViewDataSource {
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		return 3
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		switch section {
+		case 0:
+			return 4
+		case 1:
+			return 2
+		default:
+			return 1
+		}
+	}
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		let headerViewCell = tableView.dequeueReusableCellWithIdentifier(HeaderViewCell.identifier()) as! HeaderViewCell
+		let accountCell = tableView.dequeueReusableCellWithIdentifier(AccountCell.identifier()) as! AccountCell
+		let settingCell = tableView.dequeueReusableCellWithIdentifier(SettingCell.identifier()) as! SettingCell
+		
+		let section = indexPath.section
+		let row = indexPath.row
+		
+		switch section {
+		case 0:
+			if row == 0 {
+				headerViewCell.headerLabel.text = "Accout"
+				return headerViewCell
+			}else if row == 1 {
+				accountCell.configureCell("user: ", value: chatUser.userName)
+				return accountCell
+			}else if row == 2 {
+				accountCell.configureCell("UW email: ", value: chatUser.userEmail)
+				return accountCell
+			}else {
+				if chatUser.emailVerified {
+					settingCell.configureSettingButton("email verified", titleColor: UIColor.lightGrayColor())
+				}else {
+					settingCell.configureSettingButton("please verify your UW email", titleColor: UIColor.redColor())
+				}
+				return settingCell
+			}
+		case 1:
+			if row == 0 {
+				headerViewCell.headerLabel.text = "Settings"
+				return headerViewCell
+			}else {
+				settingCell.configureSettingButton("reset password", titleColor: UIColor.blueColor())
+				return settingCell
+			}
+		default:
+			settingCell.configureSettingButton("account log out", titleColor: UIColor.redColor())
+			return settingCell
+		}
+		
+	}
+}
+
+extension AccountViewController: UITableViewDelegate{
+	func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		return UITableViewAutomaticDimension
+	}
+	
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		let section = indexPath.section
+		let row = indexPath.row
+		
+		if section == 2 {
+			if row == 0 {
+				PFUser.logOut()
+				dismissViewControllerAnimated(true, completion: nil)
+			}
+		}
+	}
+	
+}

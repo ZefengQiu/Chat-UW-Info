@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="143" id="qxg-Ah-6JS" customClass="AudienceInfoCell" customModule="Chat_UW_Info" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qxg-Ah-6JS" id="lt1-RL-HPL">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="255" text="Students:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9f6-cG-zkj">
+                        <rect key="frame" x="8" y="11" width="304" height="21"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audience" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gxQ-Zq-JwK">
+                        <rect key="frame" x="16" y="40" width="288" height="39"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstItem="gxQ-Zq-JwK" firstAttribute="leading" secondItem="lt1-RL-HPL" secondAttribute="leading" constant="16" id="1S7-56-meA"/>
+                    <constraint firstItem="gxQ-Zq-JwK" firstAttribute="top" secondItem="9f6-cG-zkj" secondAttribute="bottom" constant="8" id="7ZT-Ac-rMg"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="gxQ-Zq-JwK" secondAttribute="leading" id="A88-xv-4Dj"/>
+                    <constraint firstItem="9f6-cG-zkj" firstAttribute="top" secondItem="lt1-RL-HPL" secondAttribute="topMargin" constant="3" id="LXD-mm-dsP"/>
+                    <constraint firstItem="gxQ-Zq-JwK" firstAttribute="leading" secondItem="9f6-cG-zkj" secondAttribute="trailing" constant="34" id="NpB-CK-zeC"/>
+                    <constraint firstAttribute="leadingMargin" secondItem="9f6-cG-zkj" secondAttribute="leading" id="Uv0-RB-vZE"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="9f6-cG-zkj" secondAttribute="trailing" id="VqK-lp-eTQ"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="gxQ-Zq-JwK" secondAttribute="bottom" id="Wjq-RY-bsQ"/>
+                    <constraint firstItem="gxQ-Zq-JwK" firstAttribute="leading" secondItem="9f6-cG-zkj" secondAttribute="trailing" constant="35" id="bb8-AV-9if"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="gxQ-Zq-JwK" secondAttribute="trailing" id="dfc-iT-dbX"/>
+                    <constraint firstAttribute="trailing" secondItem="gxQ-Zq-JwK" secondAttribute="trailing" constant="16" id="nhW-Rp-c8w"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="A88-xv-4Dj"/>
+                        <exclude reference="NpB-CK-zeC"/>
+                        <exclude reference="bb8-AV-9if"/>
+                        <exclude reference="dfc-iT-dbX"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="audienceLabel" destination="gxQ-Zq-JwK" id="pYe-i2-arZ"/>
+            </connections>
+            <point key="canvasLocation" x="567" y="488"/>
+        </tableViewCell>
+    </objects>
+</document>

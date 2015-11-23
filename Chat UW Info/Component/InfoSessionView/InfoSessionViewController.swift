@@ -22,14 +22,20 @@ class InfoSessionViewController: UIViewController {
 	var finishParsing = false
 	var grayObsolete = 0
   
-  var userName = ChatUser.shareInstance.userName
+  var userName: String!
+//  var userEmail = ChatUser.shareInstance.userEmail
   var cellDict = [String: Int]()
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    userName = ChatUser.shareInstance.userName
+    title = "\(userName)"
+  }
 
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    title = "\(userName)"
     
     setupTableView()
 		
@@ -161,6 +167,7 @@ extension InfoSessionViewController {
 		print("----------\(termString)----is being saving in core data")
 		dataTermArray.append(data)
 	}
+  
 	
 }
 
@@ -219,6 +226,7 @@ extension InfoSessionViewController: UITableViewDataSource{
 
 
 extension InfoSessionViewController: UITableViewDelegate {
+  
   func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
     if finishParsing {
       return InfoSessionCell.estimatedRowHeight()
@@ -226,6 +234,7 @@ extension InfoSessionViewController: UITableViewDelegate {
       return LoadingCell.estimatedRowHeight()
     }
   }
+  
 	
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)

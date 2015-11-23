@@ -10,9 +10,13 @@ import UIKit
 
 class AddChatsCell: UITableViewCell {
 	
+  @IBOutlet weak var chatImageView: UIImageView!
+  
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// Initialization code
+    
+    chatImageView.image = UIImage(named: "gooseChat.png")
 	}
 	
 	override func setSelected(selected: Bool, animated: Bool) {

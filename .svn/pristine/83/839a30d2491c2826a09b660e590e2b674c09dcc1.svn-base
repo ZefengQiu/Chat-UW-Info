@@ -1,0 +1,16 @@
+//
+//  ChatUser.swift
+//  Chat UW Info
+//
+//  Created by Qiu Zefeng on 2015-10-17.
+//  Copyright © 2015 Qiu Zefeng. All rights reserved.
+//
+
+import Foundation
+
+
+struct ChatUser {
+	var userName = ""
+	var userEmail = ""
+	var emailVerified = false
+}

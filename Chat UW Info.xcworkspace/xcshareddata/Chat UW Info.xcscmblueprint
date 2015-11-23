@@ -1,0 +1,24 @@
+{
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "ca209634-bfeb-4e4c-9aae-d2553c29bf60++9253" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "ca209634-bfeb-4e4c-9aae-d2553c29bf60++9253" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "37F9B303-D12F-4F5D-8B36-22AEDB4A7DCE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "ca209634-bfeb-4e4c-9aae-d2553c29bf60++9253" : "Chat%20UW%20Info\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Chat UW Info",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Chat UW Info.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/ecesvn.uwaterloo.ca\/courses\/ece651",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "ca209634-bfeb-4e4c-9aae-d2553c29bf60++9253"
+    }
+  ]
+}

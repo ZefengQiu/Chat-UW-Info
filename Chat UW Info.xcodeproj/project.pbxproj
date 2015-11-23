@@ -16,6 +16,9 @@
 		0331C4851C00290B00851360 /* userNameIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0331C4841C00290B00851360 /* userNameIcon.png */; };
 		0331C4871C002B2400851360 /* favInfoIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0331C4861C002B2400851360 /* favInfoIcon.png */; };
 		0331C4891C00303600851360 /* settingIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0331C4881C00303600851360 /* settingIcon.png */; };
+		03454D5A1C00E76600C09687 /* SofaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03454D591C00E76600C09687 /* SofaCell.swift */; };
+		03454D5C1C00E77300C09687 /* SofaCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 03454D5B1C00E77300C09687 /* SofaCell.xib */; };
+		03454D621C016A7D00C09687 /* gooseChat.png in Resources */ = {isa = PBXBuildFile; fileRef = 03454D611C016A7D00C09687 /* gooseChat.png */; };
 		1FAE5C94427D4FA57A8A01A6 /* Pods_Chat_UW_InfoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2E97870D4D973C3C8CF486 /* Pods_Chat_UW_InfoUITests.framework */; };
 		53F6AD3239671FDC9F104B9C /* Pods_Chat_UW_InfoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 750BB0425C8FDF1C871012C4 /* Pods_Chat_UW_InfoTests.framework */; };
 		68C8B7794F88D0C63B0A82F4 /* Pods_Chat_UW_Info.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B1241EEA23B58409CED070 /* Pods_Chat_UW_Info.framework */; };
@@ -121,6 +124,9 @@
 		0331C4841C00290B00851360 /* userNameIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = userNameIcon.png; sourceTree = "<group>"; };
 		0331C4861C002B2400851360 /* favInfoIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = favInfoIcon.png; sourceTree = "<group>"; };
 		0331C4881C00303600851360 /* settingIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settingIcon.png; sourceTree = "<group>"; };
+		03454D591C00E76600C09687 /* SofaCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SofaCell.swift; sourceTree = "<group>"; };
+		03454D5B1C00E77300C09687 /* SofaCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SofaCell.xib; sourceTree = "<group>"; };
+		03454D611C016A7D00C09687 /* gooseChat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gooseChat.png; sourceTree = "<group>"; };
 		07D3ADF8F4539B7E15B96D57 /* Pods-Chat UW InfoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat UW InfoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chat UW InfoTests/Pods-Chat UW InfoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		25C082D6EE7E5BE3D117FD43 /* Pods-Chat UW Info.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat UW Info.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chat UW Info/Pods-Chat UW Info.debug.xcconfig"; sourceTree = "<group>"; };
 		65B65899804A3526E9792822 /* Pods-Chat UW InfoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat UW InfoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chat UW InfoUITests/Pods-Chat UW InfoUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -359,6 +365,7 @@
 				0331C4841C00290B00851360 /* userNameIcon.png */,
 				0331C4861C002B2400851360 /* favInfoIcon.png */,
 				0331C4881C00303600851360 /* settingIcon.png */,
+				03454D611C016A7D00C09687 /* gooseChat.png */,
 			);
 			path = resource;
 			sourceTree = "<group>";
@@ -524,6 +531,8 @@
 				BED225EE1BB5F15300B2964F /* ChatsCell.xib */,
 				BE273D631BE023D300A1F2E6 /* CommentCell.swift */,
 				BE273D641BE023D300A1F2E6 /* CommentCell.xib */,
+				03454D591C00E76600C09687 /* SofaCell.swift */,
+				03454D5B1C00E77300C09687 /* SofaCell.xib */,
 			);
 			path = chatCells;
 			sourceTree = "<group>";
@@ -694,6 +703,7 @@
 				BED4BE211BD48247004A2306 /* SearchCell.xib in Resources */,
 				BED225E81BB5E98100B2964F /* InfoSessionCell.xib in Resources */,
 				BED2259C1BB5999A00B2964F /* LaunchScreen.storyboard in Resources */,
+				03454D621C016A7D00C09687 /* gooseChat.png in Resources */,
 				BEC729661BD23E2900E6CA46 /* SettingCell.xib in Resources */,
 				BE480A7A1BD7EB6F0080B29E /* uw_building.plist in Resources */,
 				BED225F91BB5F15300B2964F /* ChatsCell.xib in Resources */,
@@ -711,6 +721,7 @@
 				0331C4871C002B2400851360 /* favInfoIcon.png in Resources */,
 				BE273D661BE023D300A1F2E6 /* CommentCell.xib in Resources */,
 				BED225941BB5999A00B2964F /* Main.storyboard in Resources */,
+				03454D5C1C00E77300C09687 /* SofaCell.xib in Resources */,
 				BED225F71BB5F15300B2964F /* AudienceInfoCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -868,6 +879,7 @@
 				BED225E51BB5E96200B2964F /* InfoSessionCell.swift in Sources */,
 				BED225DB1BB59F6B00B2964F /* SignInViewController.swift in Sources */,
 				BED225971BB5999A00B2964F /* Chat_UW_Info.xcdatamodeld in Sources */,
+				03454D5A1C00E76600C09687 /* SofaCell.swift in Sources */,
 				BE273D6A1BE075CA00A1F2E6 /* ExDate.swift in Sources */,
 				BED225DF1BB5E7D500B2964F /* InfoSessionViewController.swift in Sources */,
 				BE273D6D1BE08C0E00A1F2E6 /* InfoMapViewController.swift in Sources */,

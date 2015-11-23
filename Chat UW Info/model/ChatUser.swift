@@ -11,14 +11,14 @@ import Foundation
 
 class ChatUser {
   
-  static let shareInstance = ChatUser()
+  static var shareInstance = ChatUser()
   
 	var userName = ""
 	var userEmail = ""
   var userDepartment = ""
   var userPrivacy = true
   
-  var userIcahnParseID = ""
+  var userChatParseID = ""
   var userFollowedInfoSessions = [String]()
   
 	var emailVerified = false
@@ -30,5 +30,14 @@ class ChatUser {
     ChatUser.shareInstance.userDepartment = userDepart
     
   }
+  
+//  class func clearSingletomUser() {
+//    ChatUser.shareInstance.userName = ""
+//    ChatUser.shareInstance.userEmail = ""
+//    ChatUser.shareInstance.userDepartment = ""
+//    ChatUser.shareInstance.userPrivacy = true
+//    ChatUser.shareInstance.userFollowedInfoSessions = [String]()
+//    ChatUser.shareInstance.emailVerified = false
+//  }
   
 }

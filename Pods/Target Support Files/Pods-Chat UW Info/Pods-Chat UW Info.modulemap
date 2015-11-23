@@ -1,0 +1,6 @@
+framework module Pods_Chat_UW_Info {
+  umbrella header "Pods-Chat UW Info-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,110 @@
+//
+//  SignInViewController.swift
+//  Chat UW Info
+//
+//  Created by Qiu Zefeng on 2015-09-25.
+//  Copyright © 2015 Qiu Zefeng. All rights reserved.
+//
+
+import UIKit
+import Parse
+import Bolts
+
+class SignInViewController: UIViewController {
+  
+  @IBOutlet weak var userNameTextField: UITextField!
+  @IBOutlet weak var passwordTextField: UITextField!
+  
+  var securePassword = true
+  
+  @IBAction func showPassword(sender: UIBarButtonItem) {
+    if securePassword {
+      securePassword = false
+    }else {
+      securePassword = true
+    }
+    passwordTextField.secureTextEntry = securePassword
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    userNameTextField.placeholder = "User"
+    passwordTextField.placeholder = "password"
+    passwordTextField.secureTextEntry = securePassword
+    
+    if let user = PFUser.currentUser() {
+      if user.isAuthenticated() {
+        self.cometoChats()
+      }
+    }
+  }
+  
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
+  }
+  
+  @IBAction func logIn(sender: UIButton) {
+		let userLogin = userNameTextField.text!
+		let trimmedUserName = userLogin.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    PFUser.logInWithUsernameInBackground(trimmedUserName, password: passwordTextField.text!) { user, error in
+      if user != nil {
+        if user!["emailVerified"] as! Bool == false {
+          self.alertEmailNotVerify()
+        }
+        self.cometoChats()
+      }else if let errors = error {
+        self.showErrorView(errors)
+      }
+    }
+  }
+  
+  @IBAction func SignUp(sender: UIButton) {
+    let signUpNav = self.storyboard?.instantiateViewControllerWithIdentifier("SignUpNavController") as! UINavigationController
+    let signUpVc = signUpNav.topViewController as! SignUpViewController
+    signUpVc.delegate = self
+    self.navigationController?.presentViewController(signUpNav, animated: true, completion: nil)
+  }
+  
+  func cometoChats() {
+    let rootVC = self.storyboard?.instantiateViewControllerWithIdentifier("RootViewController") as! RootViewController
+		self.navigationController?.showDetailViewController(rootVC, sender: nil)
+  }
+  
+  private func alertEmailNotVerify() {
+    let alertController = UIAlertController(title: "UW Email Verification",
+      message: "please verify your UW email before Chat with others",
+      preferredStyle: UIAlertControllerStyle.Alert
+    )
+    
+    alertController.addAction(UIAlertAction(title: "OKAY",
+      style: UIAlertActionStyle.Default,
+      handler: { alertController in self.cometoChats() } ))
+    
+    self.presentViewController(alertController, animated: true, completion: nil)
+  }
+
+  
+}
+
+extension SignInViewController: SignUpViewControllerDelegate {
+  
+  func signUpCancel(controller: UIViewController) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  func providingSignUpInformation(controller: UIViewController, signUpUserName userName: String, signUpPassword password: String) {
+    userNameTextField.text = userName
+    passwordTextField.text = password
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+}
+
+
+
+
+
+
+

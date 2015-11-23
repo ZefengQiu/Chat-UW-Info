@@ -22,3 +22,20 @@ class SofaCell: UITableViewCell {
     }
 
 }
+
+
+extension SofaCell: TableViewInfo {
+  
+  class func identifier() -> String {
+    return NSStringFromClass(SofaCell.self)
+  }
+  
+  class func estimatedRowHeight() -> CGFloat {
+    return 60
+  }
+  
+  class func registerInTableView(tableView: UITableView) {
+    let cellnib = UINib(nibName: "SofaCell", bundle: NSBundle(forClass: SofaCell.self))
+    tableView.registerNib(cellnib, forCellReuseIdentifier: SofaCell.identifier())
+  }
+}

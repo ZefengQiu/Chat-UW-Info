@@ -1,0 +1,329 @@
+//
+//  IndividualViewController.swift
+//  Chat UW Info
+//
+//  Created by Qiu Zefeng on 2015-09-25.
+//  Copyright © 2015 Qiu Zefeng. All rights reserved.
+//
+
+import UIKit
+import Parse
+import Bolts
+import CoreData
+
+class AccountViewController: UIViewController {
+  
+  @IBOutlet weak var accoutTableView: UITableView!
+  
+  var favoriteInfoSessions = [InfoSessionUnits]()
+  var numOfFav = 0
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+		
+		fetchFavoriteInfoSessionFromParse()
+    self.accoutTableView.reloadData()
+  }
+  
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+		
+		title = "Chat UW Info"
+    
+    fetchFavoriteInfoSessionFromParse()
+    setupTableView()
+  }
+	
+  override func didReceiveMemoryWarning() {
+    super.didReceiveMemoryWarning()
+    // Dispose of any resources that can be recreated.
+  }
+  
+	private func setupTableView() {
+		HeaderViewCell.registerInTableView(accoutTableView)
+		AccountCell.registerInTableView(accoutTableView)
+		SettingCell.registerInTableView(accoutTableView)
+    UserPrivacyCell.registerInTableView(accoutTableView)
+    FavoriteInfoCell.registerInTableView(accoutTableView)
+		
+		accoutTableView.delegate = self
+		accoutTableView.dataSource = self
+		
+		accoutTableView.rowHeight = UITableViewAutomaticDimension
+	}
+  
+}
+
+//MARK: downloading favorite info sessions from data base
+
+
+extension AccountViewController {
+  
+  func fetchFavoriteInfoSessionFromParse() {
+    let query = PFQuery(className: "ParseChatUser")
+    query.whereKey("userName", equalTo: ChatUser.shareInstance.userName)
+    query.whereKey("userEmail", equalTo: ChatUser.shareInstance.userEmail)
+    
+    query.getFirstObjectInBackgroundWithBlock({(object: PFObject?, error: NSError?) -> Void in
+      if error == nil {
+        if let chatObject = object as? ParseChatUser {
+          let infoFavArray = chatObject["infoSessionFollowed"] as! [String]
+        
+          if !infoFavArray.isEmpty {
+            self.loadFavoriteInfoSessionFromCoreData(infoFavArray)
+            self.numOfFav = infoFavArray.count
+          }
+        }
+      }else if let error = error {
+        self.showErrorView(error)
+      }
+    })
+  }
+  
+  
+  func loadFavoriteInfoSessionFromCoreData(infoSessions: [String]) {
+    let fetchRequest = NSFetchRequest(entityName: "InfoSessionUnits")
+    
+    for infosession in infoSessions {
+      let predicate = NSPredicate(format: "employer = %@", infosession)
+      fetchRequest.predicate = predicate
+      
+      do {
+        let fetchResult = try Locator.managedObjectContext.executeFetchRequest(fetchRequest) as! [InfoSessionUnits]
+        if !favoriteInfoSessions.contains(fetchResult[0]) {
+          favoriteInfoSessions.append(fetchResult[0])
+        }
+      }catch let error as NSError {
+        print("fetch failed: \(error.localizedDescription))")
+      }
+    }
+    
+    if numOfFav != infoSessions.count {
+      self.accoutTableView.reloadCertainSection(1)
+    }
+    
+  }
+
+}
+
+
+//MARK: table view datasource and delegate
+
+extension AccountViewController: UITableViewDataSource {
+	func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+		return 4
+	}
+	
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		switch section {
+		case 0:
+			return 3
+		case 1:
+			return 1 + favoriteInfoSessions.count
+    case 2:
+      return 5
+		default:
+			return 1
+		}
+	}
+	
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+		let headerViewCell = tableView.dequeueReusableCellWithIdentifier(HeaderViewCell.identifier()) as! HeaderViewCell
+		let accountCell = tableView.dequeueReusableCellWithIdentifier(AccountCell.identifier()) as! AccountCell
+		let settingCell = tableView.dequeueReusableCellWithIdentifier(SettingCell.identifier()) as! SettingCell
+    let userPrivacyCell = tableView.dequeueReusableCellWithIdentifier(UserPrivacyCell.identifier()) as! UserPrivacyCell
+    let favInfoCell = tableView.dequeueReusableCellWithIdentifier(FavoriteInfoCell.identifier()) as! FavoriteInfoCell
+		
+		let section = indexPath.section
+		let row = indexPath.row
+		
+		switch section {
+		case 0:
+			if row == 0 {
+        headerViewCell.configureHeader(ChatUser.shareInstance.userName, image: "userNameIcon.png")
+				return headerViewCell
+			}else if row == 1 {
+				accountCell.configureCell("UW email: ", value: ChatUser.shareInstance.userEmail)
+				return accountCell
+			}else {
+				accountCell.configureCell("Department: ", value: ChatUser.shareInstance.userDepartment)
+				return accountCell
+			}
+
+		case 1:
+      if row == 0 {
+        headerViewCell.configureHeader("My Favorite Info Session", image: "favInfoIcon.png")
+        return headerViewCell
+      }else {
+        if let info = favoriteInfoSessions[row - 1].employer {
+          favInfoCell.favoriteInfoLabel.text = "\(info)"
+        }
+        favInfoCell.selectedBackgroundView = UIView.cellSelectionStyleChatBlue(UIColor.chatBule())
+        return favInfoCell
+      }
+     
+      
+    case 2:
+			if row == 0 {
+				headerViewCell.configureHeader("Settings", image: "settingIcon.png")
+				return headerViewCell
+      }else if row == 1 {
+        if ChatUser.shareInstance.emailVerified {
+          settingCell.selectionStyle = .None
+          settingCell.configureSettingButton("email verified", titleColor: UIColor.lightGrayColor())
+        }else {
+          settingCell.selectionStyle = .Gray
+          settingCell.configureSettingButton("please verify your UW email", titleColor: UIColor.blackBlue())
+        }
+        return settingCell
+      }else if row == 2 {
+        userPrivacyCell.selectionStyle = .None
+        return userPrivacyCell
+      }else if row == 3{
+        settingCell.configureSettingButton("change Department", titleColor: UIColor.blackBlue())
+        settingCell.selectionStyle = .Gray
+        return settingCell
+      }else {
+        settingCell.selectionStyle = .Gray
+				settingCell.configureSettingButton("reset password", titleColor: UIColor.blackBlue())
+				return settingCell
+			}
+      
+		default:
+      settingCell.selectionStyle = .Gray
+			settingCell.configureSettingButton("account log out", titleColor: UIColor.redColor())
+			return settingCell
+		}
+		
+	}
+}
+
+extension AccountViewController: UITableViewDelegate{
+	func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+		return UITableViewAutomaticDimension
+	}
+  
+  func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    let settingCell = tableView.dequeueReusableCellWithIdentifier(SettingCell.identifier()) as! SettingCell
+    
+    settingCell.selectionStyle = .None
+  }
+	
+	func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+		let section = indexPath.section
+		let row = indexPath.row
+		
+    if section == 1 {
+      let chatNavVc = self.storyboard?.instantiateViewControllerWithIdentifier("ChatInfoSessionNavController") as! UINavigationController
+      let chatVc = chatNavVc.topViewController as! ChatInfoSessionViewController
+      chatVc.delegate = self
+      
+      let infosession = InfoSessionUnits.convertToInfoSessionUnit(favoriteInfoSessions[row - 1])
+      chatVc.infoSessionChatOn = infosession
+      
+      self.presentViewController(chatNavVc, animated: true, completion: nil)
+    }
+    
+    if section == 2 {
+      if row == 1 {
+        if !ChatUser.shareInstance.emailVerified {
+          self.emailSendToReVerify()
+        }
+      }
+      
+      if row == 4 {
+        PFUser.requestPasswordResetForEmailInBackground(ChatUser.shareInstance.userEmail, block: {
+          succeeded, error -> Void in
+          if succeeded {
+            self.emailSendToResetPassword()
+          }else if let error = error {
+            self.showErrorView(error)
+          }
+        })
+      }
+    }
+    
+		if section == 3 {
+			if row == 0 {
+				logOut()
+			}
+		}
+    
+    self.accoutTableView.deselectRowAtIndexPath(indexPath, animated: true)
+    
+	}
+  
+  
+  private func logOut() {
+    PFUser.logOutInBackground()
+//    chatUser = ChatUser()
+    favoriteInfoSessions = [InfoSessionUnits]()
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+	
+  
+  private func emailSendToResetPassword() {
+    let alertController = UIAlertController(title: "Password Reset",
+      message: "An email has been sent to reset your user password",
+      preferredStyle: UIAlertControllerStyle.Alert
+    )
+    
+    alertController.addAction(UIAlertAction(title: "OKAY",
+      style: UIAlertActionStyle.Default,
+      handler: { alertController in self.logOut() }))
+    
+    self.presentViewController(alertController, animated: true, completion: nil)
+  }
+  
+  
+  private func emailSendToReVerify() {
+    let alertController = UIAlertController(title: "Verify Email",
+      message: "Another email has been sent to verify",
+      preferredStyle: UIAlertControllerStyle.Alert
+    )
+    
+    alertController.addAction(UIAlertAction(title: "OKAY",
+      style: UIAlertActionStyle.Default,
+      handler: { alertController in self.resendEmailToVerified() }))
+    
+    self.presentViewController(alertController, animated: true, completion: nil)
+  }
+  
+  private func resendEmailToVerified() {
+    let user = PFUser.currentUser()
+    let email = user?.email
+    user?.email = ""
+    
+    user?.saveInBackgroundWithBlock{ result, error in
+      if let error = error {
+        self.showErrorView(error)
+        return
+      }
+      user!.email = email
+      user!.saveInBackgroundWithBlock {result, error in
+        if let error = error {
+          self.showErrorView(error)
+          return
+        }
+      }
+    }
+  }
+  
+}
+
+
+extension AccountViewController: ChatInfoSessionViewControllerDelegate{
+  func tellNumberOfChats(controller: UIViewController, infoSessionEmployer employer: String, numberOfChats num: Int) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+}
+
+
+//	private func setupUserInfor() {
+//    chatUser = ChatUser()
+//		chatUser.userName = ChatUser.shareInstance.userName
+//		chatUser.userEmail = ChatUser.shareInstance.userEmail
+//		chatUser.userDepartment = ChatUser.shareInstance.userDepartment
+//    chatUser.emailVerified = ChatUser.shareInstance.emailVerified
+//	}
