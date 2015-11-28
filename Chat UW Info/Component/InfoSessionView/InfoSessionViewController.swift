@@ -39,26 +39,56 @@ class InfoSessionViewController: UIViewController {
     
     setupTableView()
 		
-		infoSessionBegin.getTermInfoSession(2015, term: .Fall){
-			(result: Bool) in
-			print("got back: \(result)")
-			self.finishParsing = result
-			
-			self.termlyInfoSessions = Info.shareInstance.InfoSessions
-			self.infoSessionTableView.reloadData()
-			
-			self.scrolltoToday()
-			
-			if self.checkTermStored() {
-				self.storeInfoSessionToCoreData(result)
-			}
-		}
+    fetchFromUniversityWebForTermInfoSessions()
     
     let todayButton = UIBarButtonItem(title: "\(NSDate.getTodayStr("MMM d"))", style: UIBarButtonItemStyle.Plain,  target: self, action: "scrolltoToday")
     navigationItem.leftBarButtonItem = todayButton
 	}
   
+  @IBAction func refreshContent() {
+    termlyInfoSessions = []
+    Info.shareInstance.InfoSessions = []
+    finishParsing = false
+    grayObsolete = 0
+    infoSessionTableView.reloadData()
+    
+    self.fetchFromUniversityWebForTermInfoSessions()
+    self.checkUserEmail()
+  }
   
+  //MARK: fetch from internet and database operation 
+  
+  private func fetchFromUniversityWebForTermInfoSessions() {
+    infoSessionBegin.getTermInfoSession(2015, term: .Fall){
+      (result: Bool) in
+      print("got back: \(result)")
+      self.finishParsing = result
+      
+      self.termlyInfoSessions = Info.shareInstance.InfoSessions
+      self.infoSessionTableView.reloadData()
+      
+      self.scrolltoToday()
+      self.storeInfoSessionToCoreData(result)
+      if self.checkTermStored() {
+        self.storeInfoSessionToCoreData(result)
+      }
+    }
+  }
+  
+  private func checkUserEmail() {
+    if let user = PFUser.currentUser() {
+      user.fetchInBackgroundWithBlock({ (object, error) -> Void in
+        user.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
+          let emailVerified = user["emailVerified"] as! Bool
+          ChatUser.shareInstance.emailVerified = emailVerified
+        })
+      })
+    }else {
+      let alertController = UIAlertController(title: "Error", message: "Sorry, could not fetch user information", preferredStyle: .Alert)
+      alertController.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
+      self.presentViewController(alertController, animated: true, completion: nil)
+    }    
+  }
   
   //MARK: configure function
   
@@ -124,6 +154,7 @@ extension InfoSessionViewController {
 			}
 		}
 	}
+  
 	
 	//check whether the info sessoin monthly have been store
 	func checkTermStored() -> Bool {
@@ -196,7 +227,7 @@ extension InfoSessionViewController: UITableViewDataSource{
       return 1
     }
   }
-  
+   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     if finishParsing {
       let cell = tableView.dequeueReusableCellWithIdentifier(InfoSessionCell.identifier()) as! InfoSessionCell
@@ -208,11 +239,6 @@ extension InfoSessionViewController: UITableViewDataSource{
 				cell.configureCellForInfoSession(InfoSession, grayInfoSession: false)
 			}
 			
-      if cellDict.has(InfoSession.employer) {
-        if let number = cellDict[InfoSession.employer] {
-          cell.chatNumberLabel.text = "\(number) chats"
-        }
-      }
 			
       return cell
       

@@ -14,7 +14,7 @@ class InfoSessionCell: UITableViewCell {
   @IBOutlet weak var locationLabel: UILabel!
   @IBOutlet weak var date_timeLabel: UILabel!
   
-  @IBOutlet weak var chatNumberLabel: UILabel!
+//  @IBOutlet weak var chatNumberLabel: UILabel!
   
   override func awakeFromNib() {
     super.awakeFromNib()

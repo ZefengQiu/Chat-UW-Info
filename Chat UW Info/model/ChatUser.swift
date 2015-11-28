@@ -7,7 +7,9 @@
 //
 
 import Foundation
-
+import Parse
+import Bolts
+import UIKit
 
 class ChatUser {
   
@@ -23,21 +25,58 @@ class ChatUser {
   
 	var emailVerified = false
   
+  
+  
   class func beforeSignInInitChatUserSingleton(userName: String, userEmail: String, userDepart: String) {
     
     ChatUser.shareInstance.userName = userName
     ChatUser.shareInstance.userEmail = userEmail
     ChatUser.shareInstance.userDepartment = userDepart
-    
   }
   
-//  class func clearSingletomUser() {
-//    ChatUser.shareInstance.userName = ""
-//    ChatUser.shareInstance.userEmail = ""
-//    ChatUser.shareInstance.userDepartment = ""
-//    ChatUser.shareInstance.userPrivacy = true
-//    ChatUser.shareInstance.userFollowedInfoSessions = [String]()
-//    ChatUser.shareInstance.emailVerified = false
+  
+  func asginChater(name: String, email: String, department: String, verified: Bool, followInfoSessions: [String]) -> ChatUser {
+    let chater = ChatUser()
+    chater.userName = name
+    chater.userEmail = email
+    chater.userDepartment = department
+    chater.emailVerified = verified
+    chater.userFollowedInfoSessions = followInfoSessions
+    
+    return chater
+  }
+  
+//  class func checkUserEmail(pfuser: PFUser) -> Bool {
+//    var emailVerified = false
+//    
+//    pfuser.fetchInBackgroundWithBlock({ (object, error) -> Void in
+//      if error != nil {
+//        
+//      }else {
+//        pfuser.fetchIfNeededInBackgroundWithBlock({ (result, error) -> Void in
+//          emailVerified = pfuser["emailVerified"] as! Bool
+//        })
+//      }
+//    })
+//    
+//    return emailVerified
 //  }
   
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

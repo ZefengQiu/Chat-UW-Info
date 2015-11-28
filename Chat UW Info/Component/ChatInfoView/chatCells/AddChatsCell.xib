@@ -10,33 +10,34 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jl5-8V-Yrd" id="c2h-CZ-EVl">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Chats +" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFb-e8-SaL">
-                        <rect key="frame" x="111" y="12" width="99" height="20.5"/>
+                        <rect key="frame" x="111" y="11" width="99" height="21"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xhA-s0-Ug1">
-                        <rect key="frame" x="220" y="0.0" width="100" height="44"/>
+                        <rect key="frame" x="220" y="0.0" width="100" height="42"/>
                         <animations/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="44" id="OJi-ez-hwA"/>
-                            <constraint firstAttribute="width" constant="100" id="pTd-Ih-6Sm"/>
+                            <constraint firstAttribute="height" constant="44" id="JS9-dS-VL9"/>
+                            <constraint firstAttribute="width" constant="100" id="k0J-IE-24x"/>
                         </constraints>
                     </imageView>
                 </subviews>
                 <animations/>
                 <constraints>
-                    <constraint firstItem="xhA-s0-Ug1" firstAttribute="leading" secondItem="AFb-e8-SaL" secondAttribute="trailing" constant="10" id="4pu-xg-MgO"/>
-                    <constraint firstItem="AFb-e8-SaL" firstAttribute="centerY" secondItem="c2h-CZ-EVl" secondAttribute="centerY" id="OCB-3I-DoM"/>
-                    <constraint firstAttribute="trailing" secondItem="xhA-s0-Ug1" secondAttribute="trailing" id="VhD-QG-Mjv"/>
-                    <constraint firstItem="xhA-s0-Ug1" firstAttribute="top" secondItem="c2h-CZ-EVl" secondAttribute="top" id="XNd-9H-ZKU"/>
-                    <constraint firstItem="AFb-e8-SaL" firstAttribute="centerX" secondItem="c2h-CZ-EVl" secondAttribute="centerX" id="qBu-QT-z3j"/>
-                    <constraint firstAttribute="bottom" secondItem="xhA-s0-Ug1" secondAttribute="bottom" id="wO0-gs-bki"/>
+                    <constraint firstItem="AFb-e8-SaL" firstAttribute="centerY" secondItem="c2h-CZ-EVl" secondAttribute="centerY" id="9mf-IL-dj8"/>
+                    <constraint firstAttribute="trailing" secondItem="xhA-s0-Ug1" secondAttribute="trailing" id="AiO-RY-JrV"/>
+                    <constraint firstItem="xhA-s0-Ug1" firstAttribute="top" secondItem="c2h-CZ-EVl" secondAttribute="top" id="Dp4-xZ-FxG"/>
+                    <constraint firstItem="AFb-e8-SaL" firstAttribute="top" secondItem="c2h-CZ-EVl" secondAttribute="top" constant="11" id="USQ-ub-d77"/>
+                    <constraint firstAttribute="bottom" secondItem="xhA-s0-Ug1" secondAttribute="bottom" constant="1" id="nw3-5Q-Zc6"/>
+                    <constraint firstItem="AFb-e8-SaL" firstAttribute="centerX" secondItem="c2h-CZ-EVl" secondAttribute="centerX" id="xG3-U2-G0d"/>
+                    <constraint firstAttribute="bottom" secondItem="AFb-e8-SaL" secondAttribute="bottom" constant="11" id="xhu-P5-Yje"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>

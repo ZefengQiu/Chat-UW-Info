@@ -21,11 +21,18 @@ class SignUpViewController: UIViewController {
   @IBOutlet weak var emailTextField: UITextField!
   @IBOutlet weak var departmentTextField: UITextField!
   
+  @IBOutlet weak var wrapperView: UIView!
+  var scrollView = AutoKeyboardScrollView()
+  var views = [String: UIView]()
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     configPlaceholder()
+    
+    //set up auto scroll keyboard view 
+    setupViews()
+    setupConstraints()
     
     //secure the password text field
     passwordTextField.secureTextEntry = true
@@ -174,6 +181,42 @@ class SignUpViewController: UIViewController {
     // Dispose of any resources that can be recreated.
   }
   
+}
+
+
+//MARK: for auto scroll keyboard view
+
+extension SignUpViewController {
+  func setupViews() {
+    scrollView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(scrollView)
+    
+    // Remove from super to remove all self constraints
+    wrapperView.removeFromSuperview()
+    
+    wrapperView.translatesAutoresizingMaskIntoConstraints = false
+    // Be sure to add subviews on contentView
+    scrollView.contentView.addSubview(wrapperView)
+    
+    scrollView.backgroundColor = wrapperView.backgroundColor
+    scrollView.userInteractionEnabled = true
+    scrollView.bounces = true
+    scrollView.scrollEnabled = true
+  }
+  
+  func setupConstraints() {
+    views["scrollView"] = scrollView
+    views["wrapperView"] = wrapperView
+    
+    var constraints = [NSLayoutConstraint]()
+    constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[scrollView]|", options: [], metrics: nil, views: views)
+    constraints +=  NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollView]|", options: [], metrics: nil, views: views)
+    
+    constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[wrapperView]|", options: [], metrics: nil, views: views)
+    constraints +=  NSLayoutConstraint.constraintsWithVisualFormat("V:|[wrapperView]|", options: [], metrics: nil, views: views)
+    
+    NSLayoutConstraint.activateConstraints(constraints)
+  }
 }
 
 

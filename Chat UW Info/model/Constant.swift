@@ -43,4 +43,8 @@ extension UIColor {
   class func blackBlue() -> UIColor {
     return UIColor(red: 0.0, green: 0.0, blue: 0.2, alpha: 1.0)
   }
+  
+  class func semiClearGray(aplha degree: CGFloat) -> UIColor {
+    return UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: degree)
+  }
 }

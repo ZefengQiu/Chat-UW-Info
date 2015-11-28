@@ -39,7 +39,7 @@ extension AccountCell: TableViewInfo {
 	}
 	
 	class func estimatedRowHeight() -> CGFloat {
-		return 44
+		return 50
 	}
 	
 	class func registerInTableView(tableView: UITableView) {

@@ -10,18 +10,18 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gZp-pG-Ca8" id="eUg-Cw-jw3">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OOm-b6-vGd">
-                        <rect key="frame" x="8" y="11" width="247" height="21"/>
+                        <rect key="frame" x="8" y="11" width="247" height="20"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d4f-fU-42i">
-                        <rect key="frame" x="263" y="6" width="51" height="31"/>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d4f-fU-42i">
+                        <rect key="frame" x="263" y="6" width="51" height="30"/>
                         <animations/>
                         <connections>
                             <action selector="changePrivacyStatus" destination="gZp-pG-Ca8" eventType="valueChanged" id="oWf-qK-JBe"/>
@@ -44,7 +44,7 @@
                 <outlet property="privacySwitch" destination="d4f-fU-42i" id="zeU-QB-uQI"/>
                 <outlet property="userPrivacyLabel" destination="OOm-b6-vGd" id="tht-oE-9Rp"/>
             </connections>
-            <point key="canvasLocation" x="421" y="421"/>
+            <point key="canvasLocation" x="178" y="373"/>
         </tableViewCell>
     </objects>
 </document>

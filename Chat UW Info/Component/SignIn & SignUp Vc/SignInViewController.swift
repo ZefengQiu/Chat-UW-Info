@@ -16,6 +16,7 @@ class SignInViewController: UIViewController {
   @IBOutlet weak var passwordTextField: UITextField!
   
   var securePassword = true
+  let centerIndicator = CenterIndicatorView(containerBackColor: UIColor.semiClearGray(aplha: 0.3), loadingBackColor: UIColor.chatBule(), indicatorColor: UIColor.lightGrayColor())
   
   @IBAction func showPassword(sender: UIBarButtonItem) {
     if securePassword {
@@ -34,6 +35,7 @@ class SignInViewController: UIViewController {
     passwordTextField.secureTextEntry = securePassword
     
     if let user = PFUser.currentUser() {
+      centerIndicator.showActivityIndicator(self.view)
       if user.isAuthenticated() {
         self.cometoChats(user)
       }
@@ -58,6 +60,7 @@ class SignInViewController: UIViewController {
   @IBAction func logIn(sender: UIButton) {
 		let userLogin = userNameTextField.text!
 		let trimmedUserName = userLogin.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+    centerIndicator.showActivityIndicator(self.view)
     
     PFUser.logInWithUsernameInBackground(trimmedUserName, password: passwordTextField.text!) { user, error in
       if user != nil {
@@ -66,6 +69,7 @@ class SignInViewController: UIViewController {
         }
         self.cometoChats(user!)
       }else if let errors = error {
+        self.centerIndicator.hideActicityIndicator()
         self.showErrorView(errors)
       }
     }
@@ -80,10 +84,22 @@ class SignInViewController: UIViewController {
     ChatUser.shareInstance.userDepartment = user["department"] as! String
     ChatUser.shareInstance.emailVerified = user["emailVerified"] as! Bool
     
-    self.navigationController?.showDetailViewController(rootVC, sender: nil)
+    let query = PFQuery(className: "ParseChatUser")
+    query.whereKey("userName", equalTo: ChatUser.shareInstance.userName)
+    query.whereKey("userEmail", equalTo: ChatUser.shareInstance.userEmail)
+    
+    query.getFirstObjectInBackgroundWithBlock({(object: PFObject?, error: NSError?) -> Void in
+      if error != nil {
+        self.showErrorView(error!)
+      }else if let chatObject = object {
+        ChatUser.shareInstance.userFollowedInfoSessions = chatObject["infoSessionFollowed"] as! [String]
+        self.navigationController?.showDetailViewController(rootVC, sender: nil)
+      }
+      self.centerIndicator.hideActicityIndicator()
+    })
+    
   }
 
-  
   
   //MARK: go to sign up a pfuser
   

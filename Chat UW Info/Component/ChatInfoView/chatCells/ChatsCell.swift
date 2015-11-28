@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ChatsCellDelegate: class {
+  func inspectChater(chaterName: String)
+}
+
 class ChatsCell: UITableViewCell {
   
   @IBOutlet weak var personName: UIButton!
@@ -16,6 +20,14 @@ class ChatsCell: UITableViewCell {
 	
   @IBOutlet weak var chatContentLabel: UILabel!
   
+  var chater: String!
+  weak var delegate: ChatsCellDelegate?
+  
+  @IBAction func goToChaterView() {
+    if chater != ChatUser.shareInstance.userName {
+      delegate?.inspectChater(chater)
+    }
+  }
   
   override func awakeFromNib() {
     super.awakeFromNib()

@@ -31,3 +31,8 @@ protocol CommendViewControllerDelegate: class {
 	func commendCancel(controller: UIViewController)
 	func providingCommendFromViewController(controller: UIViewController, commendToSubmit commend: NSString)
 }
+
+
+protocol ChaterViewControllerDelegate: class {
+  func doneInspectChatUser(controller: ChaterViewController)
+}

@@ -16,6 +16,7 @@ class ChatInfoSessionViewController: UIViewController {
   
   var shouldHide: Bool = true
   
+  @IBOutlet weak var favoriteButton: UIBarButtonItem!
   @IBOutlet weak var chatInfoSessionTableView: UITableView!
   weak var delegate: ChatInfoSessionViewControllerDelegate?
   
@@ -30,9 +31,19 @@ class ChatInfoSessionViewController: UIViewController {
   var updatingComment = false
   var comment = ""
   
+  let isFav = UIImage(named: "isFavoriteNavBar.png")
+  let isNotFav = UIImage(named: "favoritChat.png")
+  
+  let centerIndicator = CenterIndicatorView(containerBackColor: UIColor.semiClearGray(aplha: 0.3), loadingBackColor: UIColor.chatBule(), indicatorColor: UIColor.lightGrayColor())
+  
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     
+    if checkFavorite(infoSessionChatOn.employer) {
+      favoriteButton.image = isFav
+    }else {
+      favoriteButton.image = isNotFav
+    }
     user = ChatUser.shareInstance.userName
     setUpTableView()
   }
@@ -46,26 +57,28 @@ class ChatInfoSessionViewController: UIViewController {
   }
   
   @IBAction func addToFavorite() {
-    let query = PFQuery(className: "ParseChatUser")
-    query.whereKey("userName", equalTo: ChatUser.shareInstance.userName)
-    query.whereKey("userEmail", equalTo: ChatUser.shareInstance.userEmail)
-    
-    query.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
-      if error != nil {
-        self.showErrorView(error!)
-      }else if let chatUserObject = object {
-        var infosessions = chatUserObject["infoSessionFollowed"] as! [String]
-        infosessions.append(self.infoSessionChatOn.employer)
-        chatUserObject["infoSessionFollowed"] = infosessions
-        chatUserObject.saveInBackgroundWithBlock{ (succeeded: Bool, error: NSError?) -> Void in
-          if succeeded {
-            //secceed upload favorite info session information
-          }else if let error = error {
-            self.showErrorView(error)
+    if favoriteButton.image == isNotFav {
+      let query = PFQuery(className: "ParseChatUser")
+      query.whereKey("userName", equalTo: ChatUser.shareInstance.userName)
+      query.whereKey("userEmail", equalTo: ChatUser.shareInstance.userEmail)
+      
+      query.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+        if error != nil {
+          self.showErrorView(error!)
+        }else if let chatUserObject = object {
+          var infosessions = chatUserObject["infoSessionFollowed"] as! [String]
+          infosessions.append(self.infoSessionChatOn.employer)
+          chatUserObject["infoSessionFollowed"] = infosessions
+          chatUserObject.saveInBackgroundWithBlock{ (succeeded: Bool, error: NSError?) -> Void in
+            if succeeded {
+              self.favoriteButton.image = self.isFav
+            }else if let error = error {
+              self.showErrorView(error)
+            }
           }
         }
-      }
-    })
+      })
+    }
   }
   
   
@@ -88,6 +101,19 @@ class ChatInfoSessionViewController: UIViewController {
     chatInfoSessionTableView.dataSource = self
     
     chatInfoSessionTableView.rowHeight = UITableViewAutomaticDimension
+  }
+  
+  private func checkFavorite(infosession: String) -> Bool {
+    let infosessions = ChatUser.shareInstance.userFollowedInfoSessions
+    if !infosessions.isEmpty {
+      for info in infosessions {
+        if info == infosession {
+          return true
+        }
+      }
+    }
+    
+    return false
   }
 	
 
@@ -220,6 +246,7 @@ extension ChatInfoSessionViewController {
 
 //MARK: table view delegate and datasource
 extension ChatInfoSessionViewController: UITableViewDataSource {
+  
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return 3
   }
@@ -286,10 +313,15 @@ extension ChatInfoSessionViewController: UITableViewDataSource {
 				return sofaCell
 			}else {
 				doneUploadingFromParse = false
+        chatsCell.selectionStyle = .None
 				let tmpResult = parseResult[row]
 				chatsCell.personName.setTitle("\(tmpResult[0]):", forState: UIControlState.Normal)
 				chatsCell.chatContentLabel.text = tmpResult[1]
 				chatsCell.chatTimeLabel.text = tmpResult[2]
+        
+        chatsCell.delegate = self
+        chatsCell.chater = tmpResult[0]
+        
 				return chatsCell
 			}
 		}
@@ -339,10 +371,21 @@ extension ChatInfoSessionViewController: UITableViewDelegate {
 		
 		if section == 1 {
 			if row == 0 {
-				let commendNavVc = self.storyboard?.instantiateViewControllerWithIdentifier("CommmendNavViewController") as! UINavigationController
-				let cVc = commendNavVc.topViewController as! CommendViewController
-				cVc.commendDelegate = self
-				self.showViewController(commendNavVc, sender: nil)
+        if ChatUser.shareInstance.emailVerified {
+          let commendNavVc = self.storyboard?.instantiateViewControllerWithIdentifier("CommmendNavViewController") as! UINavigationController
+          let cVc = commendNavVc.topViewController as! CommendViewController
+          cVc.commendDelegate = self
+          self.showViewController(commendNavVc, sender: nil)
+        }else {
+          let alertController = UIAlertController(title: "UW Email Verification",
+            message: "please verify your UW email before Chat with others",
+            preferredStyle: UIAlertControllerStyle.Alert
+          )
+          
+          alertController.addAction(UIAlertAction(title: "OKAY", style: .Default, handler: nil))
+          
+          self.presentViewController(alertController, animated: true, completion: nil)
+        }
 			}
 		}
     
@@ -351,6 +394,67 @@ extension ChatInfoSessionViewController: UITableViewDelegate {
   }
 }
 
+//MARK: insepct the Chater
+
+extension ChatInfoSessionViewController: ChatsCellDelegate {
+  
+  func inspectChater(chaterName: String) {
+    let chaterNav = self.storyboard?.instantiateViewControllerWithIdentifier("ChaterNavViewController") as! UINavigationController
+    let chaterView = chaterNav.topViewController as! ChaterViewController
+    
+    let query = PFQuery(className: "ParseChatUser")
+    query.whereKey("userName", equalTo: chaterName)
+    
+    centerIndicator.showActivityIndicator(self.view)
+    query.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+      if error != nil {
+        self.centerIndicator.hideActicityIndicator()
+        self.showErrorView(error!)
+      }else if let chaterObject = object {
+        let chater = ChatUser()
+        let privacy = chaterObject["userPrivacy"] as! Bool
+        chater.userName = chaterObject["userName"] as! String
+        chater.userEmail = chaterObject["userEmail"] as! String
+        chater.userDepartment = chaterObject["userDepartment"] as! String
+        chater.userFollowedInfoSessions = chaterObject["infoSessionFollowed"] as! [String]
+        
+        if privacy {
+          self.centerIndicator.hideActicityIndicator()
+          chaterView.chater = chater
+          chaterView.delegate = self
+          self.presentViewController(chaterNav, animated: true, completion: nil)
+        }else {
+          self.centerIndicator.hideActicityIndicator()
+          self.violatePrivacyAlert()
+        }
+      }
+    })
+
+  }
+  
+  private func violatePrivacyAlert() {
+    let alertController = UIAlertController(title: "User Privary",
+      message: "Sorry, the chat user do not want others inspect his/her profile.",
+      preferredStyle: UIAlertControllerStyle.Alert
+    )
+    
+    alertController.addAction(UIAlertAction(title: "OKAY", style: UIAlertActionStyle.Default, handler: nil))
+    
+    self.presentViewController(alertController, animated: true, completion: nil)
+  }
+  
+}
+
+//MARK: delegate from chater view controller
+
+
+extension ChatInfoSessionViewController: ChaterViewControllerDelegate {
+  func doneInspectChatUser(controller: ChaterViewController) {
+    self.dismissViewControllerAnimated(true, completion: nil)
+  }
+}
+
+
 //MARK:  safar view controller delegate
 extension ChatInfoSessionViewController: SFSafariViewControllerDelegate {
   func safariViewControllerDidFinish(controller: SFSafariViewController)
@@ -358,5 +462,26 @@ extension ChatInfoSessionViewController: SFSafariViewControllerDelegate {
     controller.dismissViewControllerAnimated(true, completion: nil)
   }
 }
+
+
+//  private func loadingAlert() {
+//    let alertController = UIAlertController(title: "fetching the chat user information form database",
+//      message: "\n",
+//      preferredStyle: UIAlertControllerStyle.Alert)
+//
+//    alertController.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+//
+//    //create an activity indicator
+//    let indicator = UIActivityIndicatorView(frame: alertController.view.bounds)
+//    indicator.color = UIColor.chatBule()
+//    indicator.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+//
+//    //add the activity indicator as a subview of the alert controller's view
+//    alertController.view.addSubview(indicator)
+//    indicator.userInteractionEnabled = false
+//    indicator.startAnimating()
+//
+//    self.presentViewController(alertController, animated: true, completion: nil)
+//  }
 
 

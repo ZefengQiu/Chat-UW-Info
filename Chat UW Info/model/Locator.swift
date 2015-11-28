@@ -148,6 +148,25 @@ class Locator {
 	class var mapViewController: MapViewController {
 		return sharedInstance._mapViewController
 	}
+  
+  // MARK: - Chater View Controller
+  private lazy var _chaterNavigationController: UINavigationController = {
+    var controller = UIViewController.viewControllerInStoryboard("Main", viewControllerName: "ChaterNavViewController") as! UINavigationController
+    return controller
+  }()
+  
+  class var chaterNavigationController: UINavigationController {
+    return sharedInstance._mapNavigationController
+  }
+  
+  private lazy var _chaterViewController: ChaterViewController = {
+    var controller = UIViewController.viewControllerInStoryboard("Main", viewControllerName: "ChaterViewController") as! ChaterViewController
+    return controller
+  }()
+  
+  class var chaterViewController: ChaterViewController {
+    return sharedInstance._chaterViewController
+  }
 	
 	//MARK: app delegate
 	

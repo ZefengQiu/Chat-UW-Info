@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="88"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7dy-Qz-QJw" id="hEm-hR-aFj">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="87.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="87"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="dl5-3U-4cO">
@@ -24,6 +24,9 @@
                                     <constraint firstAttribute="height" constant="21" id="Euc-lq-CJB"/>
                                 </constraints>
                                 <state key="normal" title="@person"/>
+                                <connections>
+                                    <action selector="goToChaterView" destination="7dy-Qz-QJw" eventType="touchUpInside" id="mmz-f9-XKc"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UpdatedAt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TEo-jM-KAq">
                                 <rect key="frame" x="230" y="0.0" width="74" height="21"/>
@@ -36,7 +39,7 @@
                         <animations/>
                     </stackView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Let's Chat" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8ap-Sx-noi">
-                        <rect key="frame" x="8" y="29" width="304" height="50"/>
+                        <rect key="frame" x="8" y="37" width="304" height="42"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -46,7 +49,7 @@
                 <animations/>
                 <constraints>
                     <constraint firstItem="dl5-3U-4cO" firstAttribute="leading" secondItem="hEm-hR-aFj" secondAttribute="leadingMargin" id="FA7-Oc-wKv"/>
-                    <constraint firstItem="8ap-Sx-noi" firstAttribute="top" secondItem="dl5-3U-4cO" secondAttribute="bottom" id="STf-7E-gbO"/>
+                    <constraint firstItem="8ap-Sx-noi" firstAttribute="top" secondItem="dl5-3U-4cO" secondAttribute="bottom" constant="8" id="STf-7E-gbO"/>
                     <constraint firstAttribute="trailingMargin" secondItem="dl5-3U-4cO" secondAttribute="trailing" id="dNl-at-VBJ"/>
                     <constraint firstAttribute="leadingMargin" secondItem="8ap-Sx-noi" secondAttribute="leading" id="dd7-Zw-Lxh"/>
                     <constraint firstItem="dl5-3U-4cO" firstAttribute="top" secondItem="hEm-hR-aFj" secondAttribute="topMargin" id="jgE-lV-WSe"/>

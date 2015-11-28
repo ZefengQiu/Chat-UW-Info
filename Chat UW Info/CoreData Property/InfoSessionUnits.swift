@@ -26,5 +26,20 @@ class InfoSessionUnits: NSManagedObject {
     
     return infosession
   }
-
+  
+  class func fetchInfoSessionAccordingEmployer(infosession: String) -> InfoSessionUnits? {
+    let fetchRequest = NSFetchRequest(entityName: "InfoSessionUnits")
+    let predicate = NSPredicate(format: "employer = %@", infosession)
+    fetchRequest.predicate = predicate
+    
+    do {
+      let fetchResult = try Locator.managedObjectContext.executeFetchRequest(fetchRequest) as! [InfoSessionUnits]
+      return fetchResult[0]
+    }catch let error as NSError {
+      print("fetch failed: \(error.localizedDescription))")
+    }
+    
+    return nil
+  }
+  
 }
