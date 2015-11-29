@@ -62,15 +62,27 @@ class InfoSessionViewController: UIViewController {
     infoSessionBegin.getTermInfoSession(2015, term: .Fall){
       (result: Bool) in
       print("got back: \(result)")
-      self.finishParsing = result
-      
-      self.termlyInfoSessions = Info.shareInstance.InfoSessions
-      self.infoSessionTableView.reloadData()
-      
-      self.scrolltoToday()
-      self.storeInfoSessionToCoreData(result)
-      if self.checkTermStored() {
-        self.storeInfoSessionToCoreData(result)
+      if result {
+        self.finishParsing = result
+        
+        self.termlyInfoSessions = Info.shareInstance.InfoSessions
+        self.infoSessionTableView.reloadData()
+        
+        self.scrolltoToday()
+        
+        if self.checkTermStored() {
+          self.storeInfoSessionToCoreData(result)
+        }
+      }else {
+        print("cannot fetch from the website, load it from the website")
+        let errorMessage = "connect to UW website got problem, load data from core data storage"
+        self.showAlertSheet("Error", message: errorMessage)
+        if let infos = InfoSessionUnits.fetchInfoSessionReturnUnit() {
+          self.termlyInfoSessions = infos
+        }else {
+          let message = "nothing in core data"
+          self.showAlertSheet("Error", message: message)
+        }
       }
     }
   }

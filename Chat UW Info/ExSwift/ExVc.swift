@@ -19,6 +19,12 @@ extension UIViewController {
     }
   }
   
+  
+  func showAlertSheet(title: String, message: String) {
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.ActionSheet)
+    alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+    presentViewController(alertController, animated: true, completion: nil)
+  }
  
   class func viewControllerInStoryboard(storyboardName: String , viewControllerName: String) -> UIViewController {
     let storyboard: UIStoryboard = UIStoryboard(name: storyboardName, bundle: nil)

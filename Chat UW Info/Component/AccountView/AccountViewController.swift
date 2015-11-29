@@ -263,6 +263,7 @@ extension AccountViewController: UITableViewDelegate{
         chatObject["infoSessionFollowed"] = infosessionArray
         chatObject.saveInBackgroundWithBlock({ succeed, error in
           if succeed {
+            ChatUser.shareInstance.userFollowedInfoSessions = ChatUser.shareInstance.userFollowedInfoSessions.filter(){$0 != infosession}
             self.centerIndicator.hideActicityIndicator()
             self.favoriteInfoSessions = self.favoriteInfoSessions.filter(){$0.employer != infosession}
             self.accoutTableView.reloadCertainSection(1)

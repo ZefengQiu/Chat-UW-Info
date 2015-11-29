@@ -17,7 +17,7 @@ class Client {
   
   private func updateFromSourceURLForMonth(year: Int, month: Month, completion: (result: Bool) -> Void) {
     let sourceURL = String(format: infoSessionSourceURL, year, month.rawValue)
-//    print("Requesting: \(sourceURL)")
+    print("Requesting: \(sourceURL)")
     
     Alamofire.request(.GET, sourceURL).responseString { response -> Void in
 			if response.result.isSuccess {
@@ -26,6 +26,7 @@ class Client {
 			}
 			if response.result.isFailure {
 				print("could not get data from uw website")
+        completion(result: false)
 			}
       completion(result: true)
     }

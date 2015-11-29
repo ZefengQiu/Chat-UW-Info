@@ -42,4 +42,32 @@ class InfoSessionUnits: NSManagedObject {
     return nil
   }
   
+  class func fetchInfoSessionReturnUnit() -> [InfoSessionUnit]? {
+    let fetchRequest = NSFetchRequest(entityName: "InfoSessionUnits")
+    var infoUnit = [InfoSessionUnit]()
+    
+    do {
+      let fetchResults = try Locator.managedObjectContext.executeFetchRequest(fetchRequest) as! [InfoSessionUnits]
+      
+      for info in fetchResults {
+        infoUnit.append(self.convertToInfoSessionUnit(info))
+      }
+      
+      return infoUnit
+    }catch let error as NSError {
+      print("fetch failed: \(error.localizedDescription))")
+    }
+    
+    return nil
+  }
+  
 }
+
+
+
+
+
+
+
+
+
