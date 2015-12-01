@@ -35,6 +35,8 @@ class SignInViewController: UIViewController {
     passwordTextField.secureTextEntry = securePassword
     
     if let user = PFUser.currentUser() {
+      userNameTextField.text = user.username
+      
       centerIndicator.showActivityIndicator(self.view)
       if user.isAuthenticated() {
         self.cometoChats(user)
@@ -45,6 +47,7 @@ class SignInViewController: UIViewController {
     view.addGestureRecognizer(tap)
     
   }
+  
   
   func dismissKeyboard() {
     view.endEditing(true)
@@ -66,14 +69,15 @@ class SignInViewController: UIViewController {
       if user != nil {
         if user!["emailVerified"] as! Bool == false {
           self.alertEmailNotVerify(user!)
+        }else {
+          self.cometoChats(user!)
         }
-        self.cometoChats(user!)
+//        self.cometoChats(user!)
       }else if let errors = error {
         self.centerIndicator.hideActicityIndicator()
         self.showErrorView(errors)
       }
     }
-    
   }
   
   func cometoChats(user: PFUser) {
@@ -81,8 +85,11 @@ class SignInViewController: UIViewController {
     
     ChatUser.shareInstance.userName = user.username!
     ChatUser.shareInstance.userEmail = user.email!
-    ChatUser.shareInstance.userDepartment = user["department"] as! String
-    ChatUser.shareInstance.emailVerified = user["emailVerified"] as! Bool
+    
+    guard let department = user["department"] as? String, let emailVerified = user["emailVerified"] as? Bool else{ return }
+
+    ChatUser.shareInstance.userDepartment = department
+    ChatUser.shareInstance.emailVerified = emailVerified
     
     let query = PFQuery(className: "ParseChatUser")
     query.whereKey("userName", equalTo: ChatUser.shareInstance.userName)
@@ -111,8 +118,8 @@ class SignInViewController: UIViewController {
   }
   
   private func alertEmailNotVerify(user: PFUser) {
-    let alertController = UIAlertController(title: "UW Email Verification",
-      message: "please verify your UW email before Chat with others",
+    let alertController = UIAlertController(title: "Email Verification",
+      message: "please verify your email before Chat with others",
       preferredStyle: UIAlertControllerStyle.Alert
     )
     
@@ -122,11 +129,21 @@ class SignInViewController: UIViewController {
     
     self.presentViewController(alertController, animated: true, completion: nil)
   }
-
   
+  
+  //MARK: foget password
+  
+  @IBAction func forgetPassword() {
+    let resetNav = self.storyboard?.instantiateViewControllerWithIdentifier("ResetPasswordNavViewController") as! UINavigationController
+    let resetVc = resetNav.topViewController as! ResetPasswordViewController
+    resetVc.delegate = self
+    
+    self.presentViewController(resetNav, animated: true, completion: nil)
+  }
+
 }
 
-extension SignInViewController: SignUpViewControllerDelegate {
+extension SignInViewController: SignUpViewControllerDelegate, ResetPasswordViewControllerDelegate {
   
   func signUpCancel(controller: UIViewController) {
     dismissViewControllerAnimated(true, completion: nil)
@@ -138,6 +155,9 @@ extension SignInViewController: SignUpViewControllerDelegate {
     dismissViewControllerAnimated(true, completion: nil)
   }
   
+  func doneResetPassword(controller: ResetPasswordViewController) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
 }
 
 

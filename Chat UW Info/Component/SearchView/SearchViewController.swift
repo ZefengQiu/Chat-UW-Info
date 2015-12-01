@@ -29,10 +29,7 @@ class SearchViewController: UIViewController {
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		searchTableView.dataSource = self
-		searchTableView.delegate = self
-		
-		SearchCell.registerInTableView(searchTableView)
+		searchTableView.animateLoadingTableView()
 	}
 	
   override func viewDidLoad() {
@@ -42,6 +39,10 @@ class SearchViewController: UIViewController {
 		configureCellOrder()
 		configureCustomSearchController()
 		
+    searchTableView.dataSource = self
+    searchTableView.delegate = self
+    
+    SearchCell.registerInTableView(searchTableView)
   }
 	
   

@@ -34,13 +34,15 @@ class MapSearchViewController: UIViewController {
 	override func viewWillAppear(animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		mapSearchTableView.delegate = self
-		mapSearchTableView.dataSource = self
+		mapSearchTableView.animateLoadingTableView()
 	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-	
+    
+    mapSearchTableView.delegate = self
+    mapSearchTableView.dataSource = self
+    
 		configureCellOrder()
 		configureCustomSearchController()
 	}

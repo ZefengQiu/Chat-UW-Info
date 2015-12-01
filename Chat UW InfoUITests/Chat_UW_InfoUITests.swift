@@ -29,110 +29,107 @@ class Chat_UW_InfoUITests: XCTestCase {
 	}
 	
 	func testLoginToParse() {
-		
-		let app = XCUIApplication()
-		let userTextField = app.textFields["User"]
-		userTextField.tap()
-		userTextField.typeText("Will")
-		
-		let passwordSecureTextField = app.secureTextFields["password"]
-		passwordSecureTextField.tap()
-		passwordSecureTextField.tap()
-		passwordSecureTextField.typeText("lswearder")
-		app.buttons["Log In"].tap()
-		
-		let tablesQuery = app.tables
-		tablesQuery.staticTexts["Nov 4, Wed  7:30 PM - 9:30 PM"].swipeUp()
-		// Failed to find matching element please file bug (bugreport.apple.com) and provide output from Console.app
-		app.navigationBars["Will"].buttons["Nov 1"].tap()
-		
-		let tabBarsQuery = app.tabBars
-		let accountButton = tabBarsQuery.buttons["Account"]
-		accountButton.tap()
-		tabBarsQuery.buttons["Search"].tap()
-		tabBarsQuery.buttons["UW Map"].tap()
-		tabBarsQuery.buttons["InfoSessions"].tap()
-		accountButton.tap()
-		tablesQuery.staticTexts["account log out"].tap()
-		
+    
+    
+    let app = XCUIApplication()
+    let userTextField = app.textFields["User"]
+    userTextField.tap()
+    userTextField.typeText("Will")
+    
+    let passwordSecureTextField = app.secureTextFields["password"]
+    passwordSecureTextField.tap()
+    passwordSecureTextField.typeText("lswearddd")
+    
+    let logInButton = app.buttons["Log In"]
+    logInButton.tap()
+    app.alerts["Error"].collectionViews.buttons["Ok"].tap()
+    passwordSecureTextField.typeText("lswearder")
+    logInButton.tap()
+    app.tabBars.buttons["Account"].tap()
+    app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.tap()
+    app.tables.staticTexts["account log out"].tap()
+    
+    
 	}
 	
 	func testInfoCell() {
 		
-		let app = XCUIApplication()
-		let userTextField = app.textFields["User"]
-		userTextField.tap()
-		userTextField.typeText("Test")
-		
-		let passwordSecureTextField = app.secureTextFields["password"]
-		passwordSecureTextField.tap()
-		passwordSecureTextField.tap()
-		passwordSecureTextField.typeText("lswearder")
-		app.buttons["Log In"].tap()
-		app.alerts["UW Email Verification"].collectionViews.buttons["OKAY"].tap()
-		
-		let tabBarsQuery = app.tabBars
-		let accountButton = tabBarsQuery.buttons["Account"]
-		accountButton.tap()
-		tabBarsQuery.buttons["InfoSessions"].tap()
-		
-		let tablesQuery2 = app.tables
-		tablesQuery2.cells.containingType(.StaticText, identifier:"Scotiabank").staticTexts["DC 1302"].tap()
-		
-		let tablesQuery = tablesQuery2
-		tablesQuery.staticTexts["DC 1302"].tap()
-		app.navigationBars["DC"].buttons["Scotiabank"].tap()
-		tablesQuery.staticTexts["http://www.scotiabank.com/campus"].tap()
-		app.buttons["Done"].tap()
-		app.navigationBars["Scotiabank"].buttons["back"].tap()
-		accountButton.tap()
-		tablesQuery.staticTexts["account log out"].tap()
+    
+    let app = XCUIApplication()
+    let userTextField = app.textFields["User"]
+    userTextField.tap()
+    userTextField.typeText("Will")
+    
+    let passwordSecureTextField = app.secureTextFields["password"]
+    passwordSecureTextField.tap()
+    passwordSecureTextField.typeText("lswearder")
+    app.buttons["Log In"].tap()
+    
+    let tablesQuery = app.tables
+    tablesQuery.cells.containingType(.StaticText, identifier:"Huawei Canada").staticTexts["TC 2218"].tap()
+    app.navigationBars["Huawei Canada"].buttons["back"].tap()
+    app.tabBars.buttons["Account"].tap()
+    tablesQuery.staticTexts["account log out"].tap()
+    
 		
 	}
 	
-	func testMap() {
+	func testSearch() {
 		
-		let app = XCUIApplication()
-		let userTextField = app.textFields["User"]
-		userTextField.tap()
-		userTextField.typeText("Will")
-		
-		let passwordSecureTextField = app.secureTextFields["password"]
-		passwordSecureTextField.tap()
-		passwordSecureTextField.tap()
-		passwordSecureTextField.typeText("lswaader")
-		
-		let logInButton = app.buttons["Log In"]
-		logInButton.tap()
-		logInButton.tap()
-		app.alerts["Error"].collectionViews.buttons["Ok"].tap()
-		passwordSecureTextField.typeText("lswearder")
-		logInButton.tap()
-		
-		let tabBarsQuery = app.tabBars
-		tabBarsQuery.buttons["UW Map"].tap()
-		
-		let uwBuildingsCatalogNavigationBar = app.navigationBars["UW Buildings Catalog"]
-		let searchButton = uwBuildingsCatalogNavigationBar.buttons["Search"]
-		searchButton.tap()
-		
-		let tablesQuery2 = app.tables
-		let tablesQuery = tablesQuery2
-		tablesQuery.staticTexts["Biology 1"].tap()
-		
-		let element = app.childrenMatchingType(.Window).elementBoundByIndex(0).childrenMatchingType(.Other).element.childrenMatchingType(.Other).element
-		element.tap()
-		element.tap()
-		searchButton.tap()
-		
-		let searchInThisAwesomeBarSearchField = tablesQuery2.searchFields["Search in this awesome bar..."]
-		searchInThisAwesomeBarSearchField.tap()
-		searchInThisAwesomeBarSearchField.typeText("will")
-		tablesQuery.staticTexts["William G. Davis Computer Research Centre"].tap()
-		element.tap()
-		uwBuildingsCatalogNavigationBar.buttons["clear"].tap()
-		tabBarsQuery.buttons["Account"].tap()
-		tablesQuery.staticTexts["account log out"].tap()
+    
+    let app = XCUIApplication()
+    let userTextField = app.textFields["User"]
+    userTextField.tap()
+    userTextField.typeText("Test")
+    
+    let passwordSecureTextField = app.secureTextFields["password"]
+    passwordSecureTextField.tap()
+    passwordSecureTextField.typeText("lswearder")
+    app.buttons["Log In"].tap()
+    app.alerts["Email Verification"].collectionViews.buttons["OKAY"].tap()
+    
+    let tabBarsQuery = app.tabBars
+    tabBarsQuery.buttons["Search"].tap()
+    
+    let searchInInfoSessionsSearchField = app.searchFields["Search in Info Sessions"]
+    searchInInfoSessionsSearchField.tap()
+    searchInInfoSessionsSearchField.typeText("apple")
+    
+    let tablesQuery = app.tables
+    tablesQuery.staticTexts["Apple"].tap()
+    app.navigationBars["Apple"].buttons["back"].tap()
+    
+    let cancelButton = app.buttons["Cancel"]
+    cancelButton.tap()
+    cancelButton.tap()
+    tabBarsQuery.buttons["Account"].tap()
+    tablesQuery.staticTexts["account log out"].tap()
+    
 		
 	}
+  
+  
+  func testMap() {
+    
+    let app = XCUIApplication()
+    let userTextField = app.textFields["User"]
+    userTextField.tap()
+    userTextField.typeText("Test")
+    
+    let passwordSecureTextField = app.secureTextFields["password"]
+    passwordSecureTextField.tap()
+    passwordSecureTextField.typeText("lswearder")
+    app.buttons["Log In"].tap()
+    app.alerts["Email Verification"].collectionViews.buttons["OKAY"].tap()
+    
+    let tabBarsQuery = app.tabBars
+    tabBarsQuery.buttons["UW Map"].tap()
+    app.navigationBars["UW Buildings Catalog"].buttons["Search"].tap()
+    
+    let tablesQuery = app.tables
+    tablesQuery.staticTexts["Biology 1"].tap()
+    tabBarsQuery.buttons["Account"].tap()
+    tablesQuery.staticTexts["account log out"].tap()
+    
+  }
 }

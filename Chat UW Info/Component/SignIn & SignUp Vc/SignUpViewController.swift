@@ -42,13 +42,14 @@ class SignUpViewController: UIViewController {
     navigationItem.leftBarButtonItem = cancelButton
   }
   
+  
   private func configPlaceholder() {
     userNameTextField.becomeFirstResponder()
     
     userNameTextField.placeholder = "enter your user name"
     passwordTextField.placeholder = "password"
     confirmPasswordTextField.placeholder = "confirm password"
-    emailTextField.placeholder = "UW email"
+    emailTextField.placeholder = "enter your email"
     departmentTextField.placeholder = "user department"
   }
   
@@ -96,22 +97,40 @@ class SignUpViewController: UIViewController {
       user.email = emailTextField.text
       user["department"] = departmentTextField.text
   
+      checkDoubleUserName(user)
       
-      user.signUpInBackgroundWithBlock{ (succeeded: Bool, error: NSError?) -> Void in
-        if error == nil {
-          self.verifyEmail()
-          self.creatingParseChatUser(user)
-        } else {
-          //Something bad has occurred
-          self.showErrorView(error!)
-        }
-      }
     }else {
       self.passwordNotMatch()
     }
     
   }
   
+  //check whether the user name has been taken
+  
+  func checkDoubleUserName(user: PFUser)  {
+    let userName = user.username
+    let query = PFQuery(className: "ParseUser")
+    query.whereKey("userName", equalTo: userName!)
+    
+    query.getFirstObjectInBackgroundWithBlock({ (object: PFObject?, error: NSError?) -> Void in
+      if error != nil {
+        user.signUpInBackgroundWithBlock{ (succeeded: Bool, error: NSError?) -> Void in
+          if error == nil {
+            self.verifyEmail()
+            self.creatingParseChatUser(user)
+          } else {
+            //Something bad has occurred
+            self.showErrorView(error!)
+          }
+        }
+      }else if let _ = object {
+        let alertController = UIAlertController(title: "Sorry", message: "the user name has been taken", preferredStyle: .Alert)
+        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+      }
+    })
+    
+  }
   
   
   //MARK: perform creating a parse chat user class 

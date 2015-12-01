@@ -26,7 +26,8 @@ class AccountViewController: UIViewController {
 		
 		self.fetchFavoriteInfoSessionFromParse()
     self.numOfFav = ChatUser.shareInstance.userFollowedInfoSessions.count
-    self.accoutTableView.reloadData()
+    
+    accoutTableView.reloadData()
   }
   
   
@@ -43,6 +44,7 @@ class AccountViewController: UIViewController {
     refreshControl = UIRefreshControl()
     refreshControl.addTarget(self, action: "fetchBoth", forControlEvents: .ValueChanged)
     accoutTableView.addSubview(refreshControl)
+    
   }
 	
   override func didReceiveMemoryWarning() {

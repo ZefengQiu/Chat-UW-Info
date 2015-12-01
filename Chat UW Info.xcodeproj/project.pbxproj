@@ -23,6 +23,7 @@
 		034BED9F1C057BCC0040B08D /* CustomIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034BED9E1C057BCC0040B08D /* CustomIndicatorView.swift */; };
 		034BEDA11C057D980040B08D /* HeadCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 034BEDA01C057D980040B08D /* HeadCell.swift */; };
 		034BEDA31C057E2E0040B08D /* HeadCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 034BEDA21C057E2E0040B08D /* HeadCell.xib */; };
+		03BFD13F1C0BED3C0078059A /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03BFD13E1C0BED3C0078059A /* ResetPasswordViewController.swift */; };
 		03E4BD081C04188200EA2942 /* ChaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E4BD071C04188200EA2942 /* ChaterViewController.swift */; };
 		1FAE5C94427D4FA57A8A01A6 /* Pods_Chat_UW_InfoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7F2E97870D4D973C3C8CF486 /* Pods_Chat_UW_InfoUITests.framework */; };
 		53F6AD3239671FDC9F104B9C /* Pods_Chat_UW_InfoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 750BB0425C8FDF1C871012C4 /* Pods_Chat_UW_InfoTests.framework */; };
@@ -136,6 +137,7 @@
 		034BED9E1C057BCC0040B08D /* CustomIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomIndicatorView.swift; sourceTree = "<group>"; };
 		034BEDA01C057D980040B08D /* HeadCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeadCell.swift; sourceTree = "<group>"; };
 		034BEDA21C057E2E0040B08D /* HeadCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeadCell.xib; sourceTree = "<group>"; };
+		03BFD13E1C0BED3C0078059A /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
 		03E4BD071C04188200EA2942 /* ChaterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChaterViewController.swift; sourceTree = "<group>"; };
 		07D3ADF8F4539B7E15B96D57 /* Pods-Chat UW InfoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat UW InfoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chat UW InfoTests/Pods-Chat UW InfoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		25C082D6EE7E5BE3D117FD43 /* Pods-Chat UW Info.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Chat UW Info.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Chat UW Info/Pods-Chat UW Info.debug.xcconfig"; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 				BED225DA1BB59F6B00B2964F /* SignInViewController.swift */,
 				BED225DC1BB59F7A00B2964F /* SignUpViewController.swift */,
 				BE1240EF1BBEDD4100B581CF /* RootViewController.swift */,
+				03BFD13E1C0BED3C0078059A /* ResetPasswordViewController.swift */,
 				0333619B1C081AED00A351A0 /* AutoKeyboardScroll */,
 			);
 			path = "SignIn & SignUp Vc";
@@ -947,6 +950,7 @@
 				BED225DD1BB59F7A00B2964F /* SignUpViewController.swift in Sources */,
 				BE273D581BDFFEE600A1F2E6 /* TimeCell.swift in Sources */,
 				BEC3EF251BCC0A9D00FA97D2 /* InfoSessionUnits.swift in Sources */,
+				03BFD13F1C0BED3C0078059A /* ResetPasswordViewController.swift in Sources */,
 				BECBD68F1BD74CE90057F560 /* MapViewController.swift in Sources */,
 				BED4BE1F1BD4823A004A2306 /* SearchCell.swift in Sources */,
 				BEA5A0171BB722E6007E0ED1 /* ExVc.swift in Sources */,

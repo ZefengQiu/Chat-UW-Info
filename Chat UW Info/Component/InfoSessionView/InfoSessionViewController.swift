@@ -31,6 +31,7 @@ class InfoSessionViewController: UIViewController {
     
     userName = ChatUser.shareInstance.userName
     title = "\(userName)"
+  
   }
 
   
@@ -137,6 +138,7 @@ class InfoSessionViewController: UIViewController {
     super.didReceiveMemoryWarning()
     // Dispose of any resources that can be recreated.
   }
+  
   
 }
 
