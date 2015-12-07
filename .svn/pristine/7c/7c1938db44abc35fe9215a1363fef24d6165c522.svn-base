@@ -117,14 +117,8 @@ class InfoSessionViewController: UIViewController {
 	
 	func scrolltoToday() {
 		grayObsolete = findDate(termlyInfoSessions)
-    
-    if grayObsolete == termlyInfoSessions.count {
-      let indexPath = NSIndexPath(forRow: grayObsolete - 1, inSection: 0)
-      infoSessionTableView.scrollToRowAtIndexPath(indexPath , atScrollPosition: .Top, animated: true)
-    }else {
-      let indexPath = NSIndexPath(forRow: grayObsolete, inSection: 0)
-      infoSessionTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
-    }
+		let indexPath = NSIndexPath(forRow: grayObsolete, inSection: 0)
+		infoSessionTableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
 	}
 	
 	private func findDate(infosessions: [InfoSessionUnit]) -> Int{
@@ -137,9 +131,8 @@ class InfoSessionViewController: UIViewController {
 			}
 			n += 1
 		}
-    
-		return infosessions.count
-  }
+		return 0
+	}
 	
   override func didReceiveMemoryWarning() {
     super.didReceiveMemoryWarning()
@@ -259,7 +252,7 @@ extension InfoSessionViewController: UITableViewDataSource{
 			}else {
 				cell.configureCellForInfoSession(InfoSession, grayInfoSession: false)
 			}
-			cell.selectedBackgroundView = UIView.cellSelectionStyleChatBlue(UIColor.chatBule())
+			
 			
       return cell
       
@@ -294,14 +287,9 @@ extension InfoSessionViewController: UITableViewDelegate {
     
     Locator.chatInfoSessionViewController.shouldHide = false
     Locator.splitViewController.presentViewController(chatNavVc, animated: true, completion: nil)
-    
-    self.infoSessionTableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
 	
-  func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-    let cell = tableView.dequeueReusableCellWithIdentifier(InfoSessionCell.identifier()) as! InfoSessionCell
-    cell.selectionStyle = .None
-  }
+	
 }
 
 

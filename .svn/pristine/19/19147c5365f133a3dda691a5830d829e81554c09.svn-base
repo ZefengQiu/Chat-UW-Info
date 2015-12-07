@@ -143,7 +143,6 @@ extension ChatInfoSessionViewController: CommendViewControllerDelegate {
 		chatInfoSessionTableView.reloadCertainSection(2)
 		
 		dismissViewControllerAnimated(true, completion: nil)
-    centerIndicator.showActivityIndicator(self.view)
 	}
 }
 
@@ -181,7 +180,6 @@ extension ChatInfoSessionViewController {
     chatsPost.saveInBackgroundWithBlock{ succeeded, error in
       if succeeded {
         //3, do something to upload the table view
-        self.centerIndicator.hideActicityIndicator()
       } else {
         //4
         if let _ = error?.userInfo["error"] as? String {

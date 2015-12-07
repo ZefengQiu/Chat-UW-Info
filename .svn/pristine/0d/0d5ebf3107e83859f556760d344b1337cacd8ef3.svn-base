@@ -465,7 +465,7 @@
                             </connections>
                         </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="g6o-aX-0oB">
-                            <rect key="frame" x="180" y="5.5" width="240" height="33"/>
+                            <rect key="frame" x="180" y="6" width="240" height="33"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <animations/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
@@ -488,7 +488,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mAo-7F-5Gt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1252" y="4147"/>
+            <point key="canvasLocation" x="2064" y="4147"/>
         </scene>
         <!--Map Search View Controller-->
         <scene sceneID="v76-cw-ndV">
@@ -508,14 +508,14 @@
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="SyI-ja-1s4" style="IBUITableViewCellStyleDefault" id="mh4-o4-L8t">
-                                        <rect key="frame" x="0.0" y="49.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="50" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mh4-o4-L8t" id="jVy-Go-vrd">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SyI-ja-1s4">
-                                                    <rect key="frame" x="15" y="0.0" width="570" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="570" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -545,7 +545,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t3w-9i-m3F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2001" y="4147"/>
+            <point key="canvasLocation" x="2806" y="4147"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="e2X-u3-6Vq">
@@ -865,7 +865,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xo6-aP-cNr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="546" y="4147"/>
+            <point key="canvasLocation" x="1358" y="4147"/>
         </scene>
         <!--Info Map View Controller-->
         <scene sceneID="GkJ-QJ-g5m">

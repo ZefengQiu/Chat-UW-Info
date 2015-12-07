@@ -36,7 +36,6 @@ class CommendViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		commendTableView.rowHeight = 150
 		
 		let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "DismissKeyboard")
 		view.addGestureRecognizer(tap)
@@ -86,6 +85,6 @@ extension CommendViewController: UITableViewDataSource {
 
 extension CommendViewController: UITableViewDelegate {
 	func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-		return UITableViewAutomaticDimension
+		return CommentCell.estimatedRowHeight()
 	}
 }

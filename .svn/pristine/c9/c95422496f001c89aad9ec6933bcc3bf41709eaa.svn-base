@@ -1,0 +1,62 @@
+//
+//  Client.swift
+//  Chat UW Info
+//
+//  Created by Qiu Zefeng on 2015-09-25.
+//  Copyright © 2015 Qiu Zefeng. All rights reserved.
+//
+
+import Foundation
+import Alamofire
+
+class Client {
+	
+  let infoSessionSourceURL = "http://www.ceca.uwaterloo.ca/students/sessions_details.php?id=%d%@"
+  static let sharedInstance = Client()
+  let parser = InfoSessionSourceHTMLParser()
+  
+  private func updateFromSourceURLForMonth(year: Int, month: Month, completion: (result: Bool) -> Void) {
+    let sourceURL = String(format: infoSessionSourceURL, year, month.rawValue)
+    print("Requesting: \(sourceURL)")
+    
+    Alamofire.request(.GET, sourceURL).responseString { response -> Void in
+			if response.result.isSuccess {
+				print("Get -\(month)- content successfully! ")
+				self.parser.parserHTMLString(response.result.value!)
+			}
+			if response.result.isFailure {
+				print("could not get data from uw website")
+        completion(result: false)
+			}
+      completion(result: true)
+    }
+  }
+	
+	private func checkTerm(term: Term) -> [Month] {
+		switch term {
+		case .Spring:
+			return [Month.Jan, Month.Feb, Month.Mar, Month.Apr]
+		case .Summer:
+			return [Month.May, Month.Jun, Month.Jul, Month.Aug]
+		default:
+			return [Month.Sep, Month.Oct, Month.Nov, Month.Dec]
+		}
+		
+	}
+	
+	func getTermInfoSession(year: Int, term: Term, completion: (result: Bool) -> Void) {
+		let months = checkTerm(term)
+		
+		updateFromSourceURLForMonth(year, month: months[0], completion: { result in
+			self.updateFromSourceURLForMonth(year, month: months[1], completion: { result in
+				self.updateFromSourceURLForMonth(year, month: months[2], completion: { result in
+					self.updateFromSourceURLForMonth(year, month: months[3], completion: {result in
+						completion(result: true)
+					})
+				})
+			})
+		})
+	}
+	
+	
+}

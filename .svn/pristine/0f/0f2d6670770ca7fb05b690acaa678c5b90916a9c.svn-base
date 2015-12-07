@@ -27,7 +27,7 @@ class AccountViewController: UIViewController {
 		self.fetchFavoriteInfoSessionFromParse()
     self.numOfFav = ChatUser.shareInstance.userFollowedInfoSessions.count
     
-//    accoutTableView.reloadData()
+    accoutTableView.reloadData()
   }
   
   
